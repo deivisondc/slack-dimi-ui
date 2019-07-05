@@ -5,7 +5,7 @@
                 <el-card>
                     <div slot="header">
                         <span>{{ item }}-feira</span>
-                        <el-button style="float:right; padding:0;" type="text">Editar</el-button>
+                        <el-button style="float:right; padding:0;" type="text" @click="goTo('/cadastro/cardapio')">Editar</el-button>
                     </div>
                     <div>
                         
@@ -18,7 +18,11 @@
 
 <script>
     export default {
-        
+        methods: {
+            goTo(route) {
+                this.$router.push(route)
+            }
+        }
     }
 </script>
 
