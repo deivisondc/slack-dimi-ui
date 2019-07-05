@@ -18,7 +18,18 @@
 
 <script>
     export default {
-
+        data() {
+            return {
+                form: {
+                    descricao: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                
+            }
+        }
     }
 </script>
 

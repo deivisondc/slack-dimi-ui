@@ -24,6 +24,11 @@
                     descricao: ''
                 }
             }
+        },
+        methods: {
+            onSubmit() {
+                
+            }
         }
     }
 </script>

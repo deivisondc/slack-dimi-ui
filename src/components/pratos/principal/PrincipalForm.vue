@@ -4,7 +4,7 @@
             <span>Cadastro do prato principal</span>
         </el-card>
 
-        <el-form model="form" label-width="200px" style="padding: 20px">
+        <el-form :model="form" label-width="200px" style="padding: 20px">
             <el-form-item label="Descrição">
                 <el-input v-model="form.descricao"></el-input>
             </el-form-item>
@@ -19,7 +19,18 @@
 
 <script>
     export default {
-        
+        data() {
+            return {
+                form: {
+                    descricao: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                
+            }
+        }
     }
 </script>
 

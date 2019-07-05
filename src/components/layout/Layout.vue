@@ -2,22 +2,20 @@
     <el-container>
         <el-header>
             <el-menu class="el-menu-demo" mode="horizontal" style="padding-left: 50px">
-                <el-menu-item index="1">Cardápio</el-menu-item>
+                <el-menu-item index="1" @click="goTo('/cardapio')">Cardápio</el-menu-item>
                 <el-submenu index="2">
                     <template slot="title">Cadastro de Pratos</template>
-                    <el-menu-item index="2-1">Principal</el-menu-item>
-                    <el-menu-item index="2-2">Acompanhamento</el-menu-item>
-                    <el-menu-item index="2-3">Salada</el-menu-item>
+                    <el-menu-item index="2-1" @click="goTo('/cadastro/prato/principal')">Principal</el-menu-item>
+                    <el-menu-item index="2-2" @click="goTo('/cadastro/prato/acompanhamento')">Acompanhamento</el-menu-item>
+                    <el-menu-item index="2-3" @click="goTo('/cadastro/prato/salada')">Salada</el-menu-item>
                 </el-submenu>
             </el-menu>  
         </el-header>
 
         <el-main>
             <div >
-                <el-card shadow="always"style="
-        width: 75%;
-        display: inline-block;">
-                <app-cardapio ></app-cardapio>
+                <el-card shadow="always" style="width: 75%; display: inline-block;">
+                    <router-view></router-view>
                 </el-card>
 
             </div>
@@ -28,12 +26,17 @@
 </template>
 
 <script>
-    import Cardapio from '../cardapio/Cardapio.vue'
-    import SaladaForm from '../pratos/salada/SaladaForm.vue'
+    // import Cardapio from '../cardapio/Cardapio.vue'
+    // import SaladaForm from '../pratos/salada/SaladaForm.vue'
 
     export default {
-        components: {
-            appCardapio: Cardapio
+        // components: {
+        //     appCardapio: Cardapio
+        // }
+        methods: {
+            goTo(route) {
+                this.$router.push(route)
+            }
         }
     }
 </script>
