@@ -1,10 +1,9 @@
 <template>
-    <div>
-        <el-card>
-            <span>Cadastro do prato principal</span>
-        </el-card>
-
-        <el-form :model="form" label-width="200px" style="padding: 20px">
+    <app-form-layout>
+        <template slot='title'>
+            Prato principal
+        </template>
+        <template>
             <el-form-item label="Descrição">
                 <el-input v-model="form.descricao"></el-input>
             </el-form-item>
@@ -13,11 +12,13 @@
                 <el-button>Cancelar</el-button>
                 <el-button type="primary" @click="onSubmit">Salvar</el-button>
             </el-form-item>
-        </el-form>
-    </div>    
+        </template>
+    </app-form-layout>
 </template>
 
 <script>
+    import FormLayout from '../../layout/FormLayout'
+
     export default {
         data() {
             return {
@@ -30,10 +31,15 @@
             onSubmit() {
                 
             }
+        },
+        components: {
+            AppFormLayout: FormLayout
         }
     }
 </script>
 
 <style scoped>
+
+    
 
 </style>

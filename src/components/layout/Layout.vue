@@ -14,7 +14,9 @@
 
         <el-main>
             <div >
-                <el-card shadow="always" style="width: 75%; display: inline-block;">
+                <el-card
+                    class="layout-content"
+                    shadow="always">
                     <router-view></router-view>
                 </el-card>
 
@@ -45,6 +47,11 @@
 
     .el-header {
         padding: 0;
+    }
+
+    .layout-content {
+        width: 60%; 
+        display: inline-block;
     }
 
     .el-footer {
