@@ -32,4 +32,8 @@ export default {
         margin-top: 20px;
         text-align: right;
     }
+
+    .el-card {
+        overflow: unset;
+    }
 </style>

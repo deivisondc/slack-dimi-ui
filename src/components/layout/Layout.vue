@@ -13,7 +13,7 @@
         </el-header>
 
         <el-main>
-            <div>
+            <div class="main-content">
                 <router-view></router-view>
             </div>
         </el-main>
@@ -44,7 +44,7 @@
         padding: 0;
     }
 
-    .layout-content {
+    .main-content {
         width: 60%; 
         display: inline-block;
     }
@@ -52,10 +52,6 @@
     .el-footer {
         height: 20px !important;
         background-color: #b2b2b2;
-    }
-
-    .el-card {
-        overflow: unset;
     }
     
 </style>
