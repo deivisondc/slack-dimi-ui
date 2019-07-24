@@ -13,13 +13,8 @@
         </el-header>
 
         <el-main>
-            <div >
-                <el-card
-                    class="layout-content"
-                    shadow="always">
-                    <router-view></router-view>
-                </el-card>
-
+            <div>
+                <router-view></router-view>
             </div>
         </el-main>
 
@@ -57,6 +52,10 @@
     .el-footer {
         height: 20px !important;
         background-color: #b2b2b2;
+    }
+
+    .el-card {
+        overflow: unset;
     }
     
 </style>

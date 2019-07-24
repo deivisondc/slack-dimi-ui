@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <el-card
+        class="layout-content"
+        shadow="always">
         <el-card class="form-title">
             <h2><slot name="title"></slot></h2>
             <p>Dados cadastrais</p>
@@ -7,7 +9,7 @@
         <el-form :model="form" label-width="200px" class="form-content">
             <slot></slot>
         </el-form>
-    </div>        
+    </el-card>        
 </template>
 
 <script>
@@ -16,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .form-title {
         margin-top: -35px;
         background-color: darkblue;
