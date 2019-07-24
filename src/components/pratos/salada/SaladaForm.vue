@@ -1,5 +1,8 @@
 <template>
-  <app-form-layout :formModel="form" :on-submit="save">
+  <app-form-layout
+    :form-model="form"
+    :on-submit="save"
+  >
     <template slot="title">
       Saladas
     </template>
