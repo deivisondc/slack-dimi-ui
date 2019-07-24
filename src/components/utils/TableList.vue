@@ -4,12 +4,17 @@
       :data="dataTable"
       stripe
     >
-      <el-table-column
-        v-for="column in columns"
-        :key="column.name"
-        :prop="column.value"
-        :label="column.name"
-      />
+      <template v-if="!showTable">
+        <el-table-column>Nenhum registro encontrado</el-table-column>
+      </template>
+      <template v-if="showTable">
+        <el-table-column
+          v-for="column in columns"
+          :key="column.name"
+          :prop="column.value"
+          :label="column.name"
+        />
+      </template>
     </el-table>
   </div>
 </template>
@@ -24,6 +29,11 @@ export default {
     columns: {
       type: Array,
       required: true,
+    },
+  },
+  computed: {
+    showTable() {
+      return this.dataTable.length > 0 && this.columns.length > 0;
     },
   },
 };
