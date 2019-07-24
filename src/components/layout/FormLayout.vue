@@ -66,4 +66,8 @@ export default {
     .el-card {
         overflow: unset;
     }
+
+    .el-form >>> .el-form-item__label {
+      font-weight: bold;
+    }
 </style>

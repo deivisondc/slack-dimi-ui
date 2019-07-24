@@ -70,9 +70,14 @@ export default {
         padding: 0;
     }
 
+    .el-main {
+      background-color: #efefef;
+    }
+
     .main-content {
         width: 60%;
         display: inline-block;
+        margin-top: 20px;
     }
 
     .el-footer {
