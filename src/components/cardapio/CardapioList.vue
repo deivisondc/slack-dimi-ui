@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-list-layout
-      :title="'Cardápios'"
+      :title="'Cardápio'"
       :sub-title="'Listagem dos cardápios por dias da semana'"
       :data-table="dataTable"
       :columns="columns"
