@@ -1,21 +1,26 @@
 <template>
-    <el-card
-        class="layout-content"
-        shadow="always">
-        <el-card class="form-title">
-            <h2><slot name="title"></slot></h2>
-            <p>Dados cadastrais</p>
-        </el-card>
-        <el-form :model="form" label-width="200px" class="form-content">
-            <slot></slot>
-        </el-form>
-    </el-card>        
+  <el-card
+    class="layout-content"
+    shadow="always"
+  >
+    <el-card class="form-title">
+      <h2><slot name="title" /></h2>
+      <p>Dados cadastrais</p>
+    </el-card>
+    <el-form
+      :model="form"
+      label-width="200px"
+      class="form-content"
+    >
+      <slot />
+    </el-form>
+  </el-card>
 </template>
 
 <script>
 export default {
-    
-}
+
+};
 </script>
 
 <style scoped>

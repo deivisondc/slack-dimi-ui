@@ -1,43 +1,42 @@
 <template>
-    <div>
-        <app-list-layout
-            :title="'Saladas'"
-            :subTitle="'Listagem de todas as saladas cadastradas'"
-            :dataTable="dataTable"
-            :columns="columns"
-            :formRoute="formRoute">
-
-        </app-list-layout>
-    </div>    
+  <div>
+    <app-list-layout
+      :title="'Saladas'"
+      :sub-title="'Listagem de todas as saladas cadastradas'"
+      :data-table="dataTable"
+      :columns="columns"
+      :form-route="formRoute"
+    />
+  </div>
 </template>
 
 <script>
-    import ListLayout from '../../layout/ListLayout';
+import ListLayout from '../../layout/ListLayout.vue';
 
-    export default {
-        data() {
-            return {
-                formRoute: '/cadastro/prato/salada/new',
-                dataTable: [
-                    {
-                        name: 'joao',
-                        address: 'teste xpto'
-                    }
-                ],
-                columns: [
-                    {
-                        name: 'Primeira Coluna',
-                        value: 'name'
-                    }
-                ]
-            }
+export default {
+  components: {
+    AppListLayout: ListLayout,
+  },
+  data() {
+    return {
+      formRoute: '/cadastro/prato/salada/new',
+      dataTable: [
+        {
+          name: 'joao',
+          address: 'teste xpto',
         },
-        components: {
-            AppListLayout: ListLayout
-        }
-    }
+      ],
+      columns: [
+        {
+          name: 'Primeira Coluna',
+          value: 'name',
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>
-    
+
 </style>
