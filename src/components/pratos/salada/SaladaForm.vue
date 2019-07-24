@@ -1,5 +1,5 @@
 <template>
-  <app-form-layout>
+  <app-form-layout :formModel="form" :on-submit="save">
     <template slot="title">
       Saladas
     </template>
@@ -7,16 +7,6 @@
     <template>
       <el-form-item label="Descrição">
         <el-input v-model="form.descricao" />
-      </el-form-item>
-
-      <el-form-item>
-        <el-button>Cancelar</el-button>
-        <el-button
-          type="primary"
-          @click="onSubmit"
-        >
-          Salvar
-        </el-button>
       </el-form-item>
     </template>
   </app-form-layout>
@@ -37,8 +27,8 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-
+    save() {
+      return true;
     },
   },
 };
