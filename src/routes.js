@@ -1,4 +1,4 @@
-import Cardapio from './components/cardapio/Cardapio.vue';
+import CardapioList from './components/cardapio/CardapioList.vue';
 import CardapioForm from './components/cardapio/CardapioForm.vue';
 
 import PrincipalList from './components/pratos/principal/PrincipalList.vue';
@@ -11,8 +11,8 @@ import SaladaList from './components/pratos/salada/SaladaList.vue';
 import SaladaForm from './components/pratos/salada/SaladaForm.vue';
 
 const routes = [
-  { path: '/cardapio', component: Cardapio },
-  { path: '/cadastro/cardapio', component: CardapioForm },
+  { path: '/cadastro/cardapio', component: CardapioList },
+  { path: '/cadastro/cardapio/new', component: CardapioForm },
   { path: '/cadastro/prato/principal', component: PrincipalList },
   { path: '/cadastro/prato/principal/new', component: PrincipalForm },
   { path: '/cadastro/prato/acompanhamento', component: AcompanhamentoList },
