@@ -1,6 +1,6 @@
 <template>
   <el-card
-    class="layout-content"
+    class="layout-content list-layout"
     shadow="always"
   >
     <el-card class="form-title">
@@ -64,21 +64,25 @@ export default {
 </script>
 
 <style scoped>
-    .form-title {
-        margin-top: -35px;
-        background-color: darkblue;
-        border-radius: 15px;
-        color: #fff;
-        text-align: left;
-        padding: 5px;
-    }
+  .list-layout {
+    height: 100%
+  }
 
-    .form-content {
-        margin-top: 20px;
-        text-align: right;
-    }
+  .form-title {
+      margin-top: -35px;
+      background-color: darkblue;
+      border-radius: 15px;
+      color: #fff;
+      text-align: left;
+      padding: 5px;
+  }
 
-    .el-card {
-        overflow: unset;
-    }
+  .form-content {
+      margin-top: 20px;
+      text-align: right;
+  }
+
+  .el-card {
+      overflow: unset;
+  }
 </style>

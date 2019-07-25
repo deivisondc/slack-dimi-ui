@@ -78,6 +78,7 @@ export default {
         width: 60%;
         display: inline-block;
         margin-top: 20px;
+        height: 700px;
     }
 
     .el-footer {

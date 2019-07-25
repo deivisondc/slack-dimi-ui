@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <app-list-layout
-      :title="'Cardápio'"
-      :sub-title="'Listagem dos cardápios por dias da semana'"
-      :data-table="dataTable"
-      :columns="columns"
-      :form-route="formRoute"
-    />
-  </div>
+  <app-list-layout
+    :title="'Cardápio'"
+    :sub-title="'Listagem dos cardápios por dias da semana'"
+    :data-table="dataTable"
+    :columns="columns"
+    :form-route="formRoute"
+  />
 </template>
 
 <script>

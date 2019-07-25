@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <app-list-layout
-      :title="'Acompanhamento'"
-      :sub-title="'Listagem de todas os acompanhamentos cadastrados'"
-      :data-table="dataTable"
-      :columns="columns"
-      :form-route="formRoute"
-    />
-  </div>
+  <app-list-layout
+    :title="'Acompanhamento'"
+    :sub-title="'Listagem de todas os acompanhamentos cadastrados'"
+    :data-table="dataTable"
+    :columns="columns"
+    :form-route="formRoute"
+  />
 </template>
 
 <script>

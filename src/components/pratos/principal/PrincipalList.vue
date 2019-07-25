@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <app-list-layout
-      :title="'Prato Principal'"
-      :sub-title="'Listagem de todos os pratos principais cadastrados'"
-      :data-table="dataTable"
-      :columns="columns"
-      :form-route="formRoute"
-    />
-  </div>
+  <app-list-layout
+    :title="'Prato Principal'"
+    :sub-title="'Listagem de todos os pratos principais cadastrados'"
+    :data-table="dataTable"
+    :columns="columns"
+    :form-route="formRoute"
+  />
 </template>
 
 <script>

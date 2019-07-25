@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <app-list-layout
-      :title="'Saladas'"
-      :sub-title="'Listagem de todas as saladas cadastradas'"
-      :data-table="dataTable"
-      :columns="columns"
-      :form-route="formRoute"
-    />
-  </div>
+  <app-list-layout
+    :title="'Saladas'"
+    :sub-title="'Listagem de todas as saladas cadastradas'"
+    :data-table="dataTable"
+    :columns="columns"
+    :form-route="formRoute"
+  />
 </template>
 
 <script>
