@@ -9,6 +9,13 @@
       </template>
 
       <template>
+        <el-form-item label="Dia da Semana">
+          <app-select-week-day
+            :model="form"
+            :placeholder="'Selecione um dia da semana'"
+            :showWeekend="false"
+          />
+        </el-form-item>
         <el-form-item label="Prato Principal">
           <el-select
             v-model="form.pratoPrincipal"
@@ -58,15 +65,17 @@
 
 <script>
 import FormLayout from '../layout/FormLayout.vue';
+import SelectWeekDay from '../utils/SelectWeekDay.vue';
 
 export default {
   components: {
     AppFormLayout: FormLayout,
+    AppSelectWeekDay: SelectWeekDay,
   },
   data() {
     return {
       form: {
-        dayOfWeek: 0,
+        weekDay: null,
         pratoPrincipal: '',
         acompanhamentos: [],
         saladas: [],
