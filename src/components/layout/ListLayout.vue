@@ -18,6 +18,16 @@
       Cadastrar
     </el-button>
 
+    <template v-if="showFilter">
+      <el-row style="padding: 20px;">
+        <el-input placeholder="Filtro" v-model="filterValue" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click="filter"></el-button>
+        </el-input>
+      </el-row>
+    </template>
+
+    <slot name="secondaryFilter" />
+
     <app-table-list
       :data-table="dataTable"
       :columns="columns"
@@ -54,8 +64,27 @@ export default {
       default: '',
       required: false,
     },
+    showFilter: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    filterFunction: {
+      type: Function,
+      required: false,
+    },
+  },
+  data() {
+    return {
+      filterValue: null,
+    };
   },
   methods: {
+    filter() {
+      if (this.filterFunction) {
+        this.filterFunction();
+      }
+    },
     goTo(route) {
       this.$router.push(route);
     },
