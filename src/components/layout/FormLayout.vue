@@ -40,6 +40,7 @@ export default {
     formRules: {
       type: Object,
       required: false,
+      default: null,
     },
     onSubmit: {
       type: Function,
@@ -47,12 +48,12 @@ export default {
     },
     listUrl: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   methods: {
     submitForm() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           this.onSubmit();
         }

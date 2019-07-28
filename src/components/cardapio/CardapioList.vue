@@ -14,19 +14,29 @@
       <el-row>
         <el-radio-group v-model="selectedWeekDayFilter">
           <el-badge :value="1" class="item" type="primary" :hidden="!filterResults">
-            <el-radio-button size="small" label="1">Segunda-feira</el-radio-button>
+            <el-radio-button size="small" label="1">
+              Segunda-feira
+            </el-radio-button>
           </el-badge>
           <el-badge :value="1" class="item" type="primary" hidden>
-            <el-radio-button size="small" label="2">Terça-feira</el-radio-button>
+            <el-radio-button size="small" label="2">
+              Terça-feira
+            </el-radio-button>
           </el-badge>
           <el-badge :value="2" class="item" type="primary" :hidden="!filterResults">
-            <el-radio-button size="small" label="3">Quarta-feira</el-radio-button>
+            <el-radio-button size="small" label="3">
+              Quarta-feira
+            </el-radio-button>
           </el-badge>
           <el-badge :value="3" class="item" type="primary" :hidden="!filterResults">
-            <el-radio-button size="small" label="4">Quinta-feira</el-radio-button>
+            <el-radio-button size="small" label="4">
+              Quinta-feira
+            </el-radio-button>
           </el-badge>
           <el-badge :value="1" class="item" type="primary" hidden>
-            <el-radio-button size="small" label="5">Sexta-feira</el-radio-button>
+            <el-radio-button size="small" label="5">
+              Sexta-feira
+            </el-radio-button>
           </el-badge>
         </el-radio-group>
       </el-row>
@@ -47,13 +57,13 @@ export default {
         {
           _id: '123',
           weekday: 'Segunda-feira',
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete'
-        }
+          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
+        },
       ],
       columns: [
         {
           name: 'Prato',
-          value: 'menuItem'
+          value: 'menuItem',
         },
       ],
       selectedWeekDayFilter: 1,
@@ -64,24 +74,23 @@ export default {
     formRoutes() {
       return {
         new: `/cadastro/cardapio/new?weekDay=${this.selectedWeekDayFilter}`,
-        edit: `/cadastro/cardapio/edit`,
-        copy: `/cadastro/cardapio/copy`,
+        edit: '/cadastro/cardapio/edit',
+        copy: '/cadastro/cardapio/copy',
       };
     },
-  },
-  methods: {
-    applyFilter(filterValue) {
-      this.filterResults = filterValue;
-    }
   },
   created() {
     if (this.$route.query.weekDay) {
       this.selectedWeekDayFilter = this.$route.query.weekDay;
     } else {
-      let dayOfWeek = new Date().getDay();
+      const dayOfWeek = new Date().getDay();
       this.selectedWeekDayFilter = dayOfWeek >= 1 && dayOfWeek <= 5 ? dayOfWeek : 1;
     }
-
+  },
+  methods: {
+    applyFilter(filterValue) {
+      this.filterResults = filterValue;
+    },
   },
 };
 </script>

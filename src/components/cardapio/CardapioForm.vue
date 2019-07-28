@@ -15,7 +15,7 @@
           <app-select-week-day
             :model="form"
             :placeholder="'Selecione um dia da semana'"
-            :showWeekend="false"
+            :show-weekend="false"
           />
         </el-form-item>
         <el-form-item label="Prato Principal" prop="mainFood">
@@ -86,43 +86,44 @@ export default {
       },
       formRules: {
         weekDay: [
-          { required: true, message: 'Selecione o dia da semana.'}
+          { required: true, message: 'Selecione o dia da semana.' },
         ],
         mainFood: [
-          { required: true, message: 'Selecione o prato principal.'}
+          { required: true, message: 'Selecione o prato principal.' },
         ],
         secondaryFood: [
-          { required: true, type: 'array', message: 'Selecione pelo menos um acompanhamento.'}
+          { required: true, type: 'array', message: 'Selecione pelo menos um acompanhamento.' },
         ],
         salad: [
-          { required: true, type: 'array', message: 'Selecione pelo menos uma salada.'}
-        ]
+          { required: true, type: 'array', message: 'Selecione pelo menos uma salada.' },
+        ],
       },
       saladas: ['Alface e Tomate em rodelas', 'Vinagrete'],
       acompanhamentos: ['Ovo e Couve', 'Legumes na mateiga', 'Teste3', 'Teste4'],
       pratosPrincipais: [
-        {name: 'Cupim'}, {name: 'Panqueca'}, {name: 'Churrasco'}],
+        { name: 'Cupim' }, { name: 'Panqueca' }, { name: 'Churrasco' }],
     };
+  },
+  created() {
+    this.form.weekDay = this.$route.query.weekDay || null;
+
+    if (this.$route.params.id) {
+      const [id] = this.$route.params;
+      this.findById(id);
+    }
   },
   methods: {
     findById(id) {
-
+      this.id = id;
     },
     save() {
-      const action = this.$route.params.action;
+      const [action] = this.$route.params;
       if (action === 'edit') {
         this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
       } else {
         this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
       }
     },
-  },
-  created() {
-    this.form.weekDay = this.$route.query.weekDay || null;
-
-    if (this.$route.params.id) {
-      const id = this.$route.params.id;
-    }
   },
 };
 </script>

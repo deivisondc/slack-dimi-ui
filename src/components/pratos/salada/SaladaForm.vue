@@ -37,7 +37,15 @@ export default {
       }
     };
   },
+  created() {
+    if (this.$route.params.id) {
+      const id = this.$route.params.id;
+      this.findById(id);
+    }
+  },
   methods: {
+    findById() {
+    },
     save() {
       const action = this.$route.params.action;
       if (action === 'edit') {
@@ -46,11 +54,6 @@ export default {
         this.$router.push(this.listUrl);
       }
     },
-  },
-  created() {
-    if (this.$route.params.id) {
-      const id = this.$route.params.id;
-    }
   },
 };
 </script>
