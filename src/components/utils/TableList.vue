@@ -23,8 +23,21 @@
             <div class="buttons-cell-align-right">
               <el-button icon="el-icon-edit" class="btn-edit" circle size="small" @click.stop="doEditData(scope.row)"/>
               <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" @click.stop="doCopyData(scope.row)" v-if="showCopyButton"/>
-              <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="doDeleteData(scope.row)"/>
+              <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="dialogVisible = true"/>
             </div>
+
+            <el-dialog
+              title="Confirmação"
+              :visible.sync="dialogVisible"
+              :close-on-click-modal="false"
+              width="30%"
+            >
+            <span>Tem certeza que deseja excluir este registro?</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">Não</el-button>
+              <el-button type="primary" @click="doDeleteData(scope.row)">Sim</el-button>
+            </span>
+            </el-dialog>
           </template>
         </el-table-column>
       </template>
@@ -62,6 +75,11 @@ export default {
       required: false,
     },
   },
+  data() {
+    return {
+      dialogVisible: false,
+    };
+  },
   computed: {
     showTable() {
       return this.dataTable.length > 0 && this.columns.length > 0;
@@ -79,7 +97,7 @@ export default {
       }
     },
     doDeleteData(data) {
-      if (data._id) {
+      if (data._id && this.deleteFunction) {
         this.deleteFunction(data._id);
       }
     },
