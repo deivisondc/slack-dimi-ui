@@ -1,14 +1,15 @@
 <template>
   <app-form-layout
     :form-model="form"
+    :form-rules="formRules"
     :on-submit="save"
   >
     <template slot="title">
       Acompanhamento
     </template>
     <template>
-      <el-form-item label="Descrição">
-        <el-input v-model="form.descricao" />
+      <el-form-item label="Descrição" prop="description">
+        <el-input v-model="form.description" />
       </el-form-item>
     </template>
   </app-form-layout>
@@ -25,13 +26,18 @@ export default {
   data() {
     return {
       form: {
-        descricao: '',
+        description: '',
+      },
+      formRules: {
+        description: [
+          { required: true, message: 'Descrição é requerida.' },
+        ],
       },
     };
   },
   methods: {
     save() {
-
+      this.$router.push('/cadastro/prato/acompanhamento')
     },
   },
 };

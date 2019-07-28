@@ -19,6 +19,7 @@ const routes = [
   { path: '/cadastro/prato/principal/new', component: PrincipalForm },
   { path: '/cadastro/prato/acompanhamento', component: AcompanhamentoList },
   { path: '/cadastro/prato/acompanhamento/new', component: AcompanhamentoForm },
+  { path: '/cadastro/prato/acompanhamento/edit/:id', component: AcompanhamentoForm },
   { path: '/cadastro/prato/salada', component: SaladaList },
   { path: '/cadastro/prato/salada/new', component: SaladaForm },
   { path: '/cadastro/prato/salada/edit/:id', component: SaladaForm },
