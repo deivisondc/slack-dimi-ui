@@ -1,46 +1,42 @@
 <template>
   <div>
     <el-table
+      empty-text="Nenhum registro encontrado"
       :data="dataTable"
       ref="myTable"
       stripe
     >
-      <template v-if="!showTable">
-        <el-table-column>Nenhum registro encontrado</el-table-column>
-      </template>
-      <template v-if="showTable">
-        <el-table-column
-          v-for="column in columns"
-          :key="column.name"
-          :prop="column.value"
-          :label="column.name"
-        />
-        <el-table-column
-          v-if="showButtonsCell"
-          label=""
-          width="150">
-          <template slot-scope="scope">
-            <div class="buttons-cell-align-right">
-              <el-button icon="el-icon-edit" class="btn-edit" circle size="small" @click.stop="doEditData(scope.row)"/>
-              <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" @click.stop="doCopyData(scope.row)" v-if="showCopyButton"/>
-              <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="dialogVisible = true"/>
-            </div>
+      <el-table-column
+        v-for="column in columns"
+        :key="column.name"
+        :prop="column.value"
+        :label="column.name"
+      />
+      <el-table-column
+        v-if="showButtonsCell"
+        label=""
+        width="150">
+        <template slot-scope="scope">
+          <div class="buttons-cell-align-right">
+            <el-button icon="el-icon-edit" class="btn-edit" circle size="small" @click.stop="doEditData(scope.row)"/>
+            <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" @click.stop="doCopyData(scope.row)" v-if="showCopyButton"/>
+            <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="dialogVisible = true"/>
+          </div>
 
-            <el-dialog
-              title="Confirmação"
-              :visible.sync="dialogVisible"
-              :close-on-click-modal="false"
-              width="30%"
-            >
-            <span>Tem certeza que deseja excluir este registro?</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">Não</el-button>
-              <el-button type="primary" @click="doDeleteData(scope.row)">Sim</el-button>
-            </span>
-            </el-dialog>
-          </template>
-        </el-table-column>
-      </template>
+          <el-dialog
+            title="Confirmação"
+            :visible.sync="dialogVisible"
+            :close-on-click-modal="false"
+            width="30%"
+          >
+          <span>Tem certeza que deseja excluir este registro?</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">Não</el-button>
+            <el-button type="primary" @click="doDeleteData(scope.row)">Sim</el-button>
+          </span>
+          </el-dialog>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -79,11 +75,6 @@ export default {
     return {
       dialogVisible: false,
     };
-  },
-  computed: {
-    showTable() {
-      return this.dataTable.length > 0 && this.columns.length > 0;
-    },
   },
   methods: {
     doEditData(data) {
