@@ -1,21 +1,11 @@
 module.exports = {
+  root: true,
   env: {
     node: true,
-    jest: true,
   },
   extends: [
-    'airbnb-base',
-    'plugin:vue/recommended',
-  ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
-  plugins: [
-    'vue',
+    'plugin:vue/essential',
+    '@vue/airbnb',
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -23,27 +13,15 @@ module.exports = {
     'import/extensions': 'off',
     'max-len': [1, 120],
   },
+  parserOptions: {
+    parser: 'babel-eslint',
+  },
   overrides: [
     {
       files: ['src/store/**/*.js'],
       rules: {
         // Por conta do Vuex, nas mutations teriamos problemas, resolvi remover essa regra apenas nos modulos
         'no-param-reassign': 'off',
-        // Indent with 4 spaces
-        // "indent": ["error", 4],
-
-        // // Indent JSX with 4 spaces
-        // "react/jsx-indent": ["error", 4],
-
-        // // Indent props with 4 spaces
-        // "react/jsx-indent-props": ["error", 4],
-        "vue/max-attributes-per-line": ["error", {
-          "singleline": 3,
-          "multiline": {
-            "max": 1,
-            "allowFirstLine": false
-          }
-        }],
       },
     },
   ],
