@@ -2,6 +2,7 @@
   <div>
     <el-table
       :data="dataTable"
+      ref="myTable"
       stripe
     >
       <template v-if="!showTable">
@@ -20,9 +21,9 @@
           width="150">
           <template slot-scope="scope">
             <div class="buttons-cell-align-right">
-              <el-button icon="el-icon-edit" class="btn-edit" circle size="small"/>
-              <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" v-if="showCopyButton"/>
-              <el-button icon="el-icon-delete" class="btn-delete" circle size="small"/>
+              <el-button icon="el-icon-edit" class="btn-edit" circle size="small" @click.stop="doEditData(scope.row)"/>
+              <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" @click.stop="doCopyData(scope.row)" v-if="showCopyButton"/>
+              <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="doDeleteData(scope.row)"/>
             </div>
           </template>
         </el-table-column>
@@ -50,14 +51,42 @@ export default {
     showCopyButton: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
+    deleteFunction: {
+      type: Function,
+      required: false,
+    },
+    formRoutes: {
+      type: Object,
+      required: false,
+    },
   },
   computed: {
     showTable() {
       return this.dataTable.length > 0 && this.columns.length > 0;
     },
   },
+  methods: {
+    doEditData(data) {
+      if (data._id && this.formRoutes.edit) {
+        this.goTo(`${this.formRoutes.edit}${data._id}`);
+      }
+    },
+    doCopyData(data) {
+      if (data._id && this.formRoutes.copy) {
+        this.goTo(`${this.formRoutes.copy}${data._id}`);
+      }
+    },
+    doDeleteData(data) {
+      if (data._id) {
+        this.deleteFunction(data._id);
+      }
+    },
+    goTo(route) {
+      this.$router.push(route);
+    },
+  }
 };
 </script>
 
