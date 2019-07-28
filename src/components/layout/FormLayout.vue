@@ -8,7 +8,9 @@
       <p>Dados cadastrais</p>
     </el-card>
     <el-form
+      ref="form"
       :model="formModel"
+      :rules="formRules"
       label-width="150px"
       class="form-content"
     >
@@ -19,7 +21,7 @@
         </el-button>
         <el-button
           type="primary"
-          @click="onSubmit"
+          @click="submitForm"
         >
           Salvar
         </el-button>
@@ -35,12 +37,23 @@ export default {
       type: Object,
       required: true,
     },
+    formRules: {
+      type: Object,
+      required: false,
+    },
     onSubmit: {
       type: Function,
       required: true,
     },
   },
   methods: {
+    submitForm() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.onSubmit();
+        }
+      });
+    },
     cancelForm() {
       this.$router.go(-1);
     },
