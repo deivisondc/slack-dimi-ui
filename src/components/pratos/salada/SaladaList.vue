@@ -4,7 +4,8 @@
     :sub-title="'Listagem de todas as saladas cadastradas'"
     :data-table="dataTable"
     :columns="columns"
-    :form-route="formRoute"
+    :form-routes="formRoutes"
+    :showButtonsCell="true"
   />
 </template>
 
@@ -17,9 +18,13 @@ export default {
   },
   data() {
     return {
-      formRoute: '/cadastro/prato/salada/new',
+      formRoutes: {
+        new: '/cadastro/prato/salada/new',
+        edit: '/cadastro/prato/salada/edit/',
+      },
       dataTable: [
         {
+          _id: 123,
           name: 'joao',
           address: 'teste xpto',
         },
