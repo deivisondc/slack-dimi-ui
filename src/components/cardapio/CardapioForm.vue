@@ -2,6 +2,7 @@
   <div>
     <app-form-layout
       :form-model="form"
+      :form-rules="formRules"
       :on-submit="save"
     >
       <template slot="title">
@@ -9,30 +10,30 @@
       </template>
 
       <template>
-        <el-form-item label="Dia da Semana">
+        <el-form-item label="Dia da Semana" prop="weekDay">
           <app-select-week-day
             :model="form"
             :placeholder="'Selecione um dia da semana'"
             :showWeekend="false"
           />
         </el-form-item>
-        <el-form-item label="Prato Principal">
+        <el-form-item label="Prato Principal" prop="mainFood">
           <el-select
-            v-model="form.pratoPrincipal"
+            v-model="form.mainFood"
             placeholder="Selecione um prato principal"
             style="width: 100%"
           >
             <el-option
               v-for="pratoPrincipal in pratosPrincipais"
-              :key="pratoPrincipal"
-              :label="pratoPrincipal"
+              :key="pratoPrincipal.name"
+              :label="pratoPrincipal.name"
               :value="pratoPrincipal"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Acompanhamentos">
+        <el-form-item label="Acompanhamentos" prop="secondaryFood">
           <el-select
-            v-model="form.acompanhamentos"
+            v-model="form.secondaryFood"
             multiple
             placeholder="Selecione um ou mais acompanhamentos"
             style="width:100%"
@@ -45,9 +46,9 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Saladas">
+        <el-form-item label="Saladas" prop="salad">
           <el-checkbox-group
-            v-model="form.saladas"
+            v-model="form.salad"
             style="width: 100%; text-align: left"
           >
             <el-checkbox
@@ -76,14 +77,29 @@ export default {
   data() {
     return {
       form: {
-        weekDay: null,
-        pratoPrincipal: '',
-        acompanhamentos: [],
-        saladas: [],
+        weekDay: '',
+        mainFood: '',
+        secondaryFood: [],
+        salad: [],
+      },
+      formRules: {
+        weekDay: [
+          { required: true, message: 'Selecione o dia da semana.'}
+        ],
+        mainFood: [
+          { required: true, message: 'Selecione o prato principal.'}
+        ],
+        secondaryFood: [
+          { required: true, type: 'array', message: 'Selecione pelo menos um acompanhamento.'}
+        ],
+        salad: [
+          { required: true, type: 'array', message: 'Selecione pelo menos uma salada.'}
+        ]
       },
       saladas: ['Alface e Tomate em rodelas', 'Vinagrete'],
       acompanhamentos: ['Ovo e Couve', 'Legumes na mateiga', 'Teste3', 'Teste4'],
-      pratosPrincipais: ['Cupim', 'Panqueca', 'Churrasco'],
+      pratosPrincipais: [
+        {name: 'Cupim'}, {name: 'Panqueca'}, {name: 'Churrasco'}],
     };
   },
   methods: {
@@ -91,7 +107,7 @@ export default {
 
     },
     save() {
-      return true;
+      this.$router.push('/cadastro/cardapio');
     },
   },
   created() {
