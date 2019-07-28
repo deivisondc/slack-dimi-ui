@@ -55,6 +55,7 @@
               :key="salada"
               :label="salada"
               name="type"
+              checked
             />
           </el-checkbox-group>
         </el-form-item>
