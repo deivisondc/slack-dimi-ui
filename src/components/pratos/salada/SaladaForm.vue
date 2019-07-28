@@ -30,7 +30,7 @@ export default {
       },
       formRules: {
         description: [
-          { required: true, message: 'Descrição é requerida.'}
+          { required: true, message: 'Descrição é requerida.' }
         ]
       }
     };
