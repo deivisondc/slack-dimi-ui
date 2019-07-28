@@ -1,7 +1,7 @@
 <template>
   <app-list-layout
     :title="'Acompanhamento'"
-    :sub-title="'Listagem de todas os acompanhamentos cadastrados'"
+    :sub-title="'Listagem de todos os acompanhamentos cadastrados'"
     :data-table="dataTable"
     :columns="columns"
     :form-routes="formRoutes"

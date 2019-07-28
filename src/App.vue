@@ -18,12 +18,12 @@ export default {
 <style>
 
 * {
-      padding:0;
-      margin:0;
-      vertical-align:baseline;
-      list-style:none;
-      border:0
-  }
+  padding:0;
+  margin:0;
+  vertical-align:baseline;
+  list-style:none;
+  border:0
+}
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
