@@ -39,8 +39,18 @@ export default {
   },
   methods: {
     save() {
-      this.$router.push(this.listUrl);
+      const action = this.$route.params.action;
+      if (action === 'edit') {
+        this.$router.push(this.listUrl);
+      } else {
+        this.$router.push(this.listUrl);
+      }
     },
+  },
+  created() {
+    if (this.$route.params.id) {
+      const id = this.$route.params.id;
+    }
   },
 };
 </script>

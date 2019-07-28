@@ -109,17 +109,21 @@ export default {
 
     },
     save() {
-      this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
+      const action = this.$route.params.action;
+      if (action === 'edit') {
+        this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
+      } else {
+        this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
+      }
     },
   },
   created() {
     this.form.weekDay = this.$route.query.weekDay || null;
 
-    if (this.$route.query.copyId || this.$route.query.id) {
-      const id = this.$route.query.copyId || this.$route.query.id;
-      this.form = findById(id);
+    if (this.$route.params.id) {
+      const id = this.$route.params.id;
     }
-  }
+  },
 };
 </script>
 
