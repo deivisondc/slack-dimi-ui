@@ -12,18 +12,17 @@ import SaladaForm from './components/pratos/salada/SaladaForm.vue';
 
 const routes = [
   { path: '/cadastro/cardapio', component: CardapioList },
-  { path: '/cadastro/cardapio/new', component: CardapioForm },
-  { path: '/cadastro/cardapio/copy/:id', component: CardapioForm },
-  { path: '/cadastro/cardapio/edit/:id', component: CardapioForm },
+  { path: '/cadastro/cardapio/:action', component: CardapioForm },
+  { path: '/cadastro/cardapio/:action/:id', component: CardapioForm },
   { path: '/cadastro/prato/principal', component: PrincipalList },
-  { path: '/cadastro/prato/principal/new', component: PrincipalForm },
-  { path: '/cadastro/prato/principal/edit/:id', component: PrincipalForm },
+  { path: '/cadastro/prato/principal/:action', component: PrincipalForm },
+  { path: '/cadastro/prato/principal/:action/:id', component: PrincipalForm },
   { path: '/cadastro/prato/acompanhamento', component: AcompanhamentoList },
-  { path: '/cadastro/prato/acompanhamento/new', component: AcompanhamentoForm },
-  { path: '/cadastro/prato/acompanhamento/edit/:id', component: AcompanhamentoForm },
+  { path: '/cadastro/prato/acompanhamento/:action', component: AcompanhamentoForm },
+  { path: '/cadastro/prato/acompanhamento/:action/:id', component: AcompanhamentoForm },
   { path: '/cadastro/prato/salada', component: SaladaList },
-  { path: '/cadastro/prato/salada/new', component: SaladaForm },
-  { path: '/cadastro/prato/salada/edit/:id', component: SaladaForm },
+  { path: '/cadastro/prato/salada/:action', component: SaladaForm },
+  { path: '/cadastro/prato/salada/:action/:id', component: SaladaForm },
 ];
 
 export default routes;

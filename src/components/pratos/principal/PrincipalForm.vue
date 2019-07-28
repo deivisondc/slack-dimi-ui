@@ -3,6 +3,7 @@
     :form-model="form"
     :form-rules="formRules"
     :on-submit="save"
+    :list-url="listUrl"
   >
     <template slot="title">
       Prato Principal
@@ -24,6 +25,7 @@ export default {
   },
   data() {
     return {
+      listUrl: '/cadastro/prato/principal',
       form: {
         description: '',
       },
@@ -36,7 +38,7 @@ export default {
   },
   methods: {
     save() {
-      this.$router.push('/cadastro/prato/principal');
+      this.$router.push(this.listUrl);
     },
   },
 };

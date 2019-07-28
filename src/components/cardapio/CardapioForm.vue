@@ -4,6 +4,7 @@
       :form-model="form"
       :form-rules="formRules"
       :on-submit="save"
+      :list-url="listUrl"
     >
       <template slot="title">
         Cardápio
@@ -76,6 +77,7 @@ export default {
   },
   data() {
     return {
+      listUrl: '/cadastro/cardapio',
       form: {
         weekDay: '',
         mainFood: '',
@@ -107,7 +109,7 @@ export default {
 
     },
     save() {
-      this.$router.push('/cadastro/cardapio');
+      this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
     },
   },
   created() {

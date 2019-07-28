@@ -64,8 +64,8 @@ export default {
     formRoutes() {
       return {
         new: `/cadastro/cardapio/new?weekDay=${this.selectedWeekDayFilter}`,
-        edit: `/cadastro/cardapio/edit/`,
-        copy: `/cadastro/cardapio/copy/`,
+        edit: `/cadastro/cardapio/edit`,
+        copy: `/cadastro/cardapio/copy`,
       };
     },
   },
@@ -73,7 +73,16 @@ export default {
     applyFilter(filterValue) {
       this.filterResults = filterValue;
     }
-  }
+  },
+  created() {
+    if (this.$route.query.weekDay) {
+      this.selectedWeekDayFilter = this.$route.query.weekDay;
+    } else {
+      let dayOfWeek = new Date().getDay();
+      this.selectedWeekDayFilter = dayOfWeek >= 1 && dayOfWeek <= 5 ? dayOfWeek : 1;
+    }
+
+  },
 };
 </script>
 

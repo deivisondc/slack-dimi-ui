@@ -3,6 +3,7 @@
     :form-model="form"
     :form-rules="formRules"
     :on-submit="save"
+    :list-url="listUrl"
   >
     <template slot="title">
       Saladas
@@ -25,6 +26,7 @@ export default {
   },
   data() {
     return {
+      listUrl: '/cadastro/prato/salada',
       form: {
         description: '',
       },
@@ -37,7 +39,7 @@ export default {
   },
   methods: {
     save() {
-      this.$router.push('/cadastro/prato/salada')
+      this.$router.push(this.listUrl)
     },
   },
 };

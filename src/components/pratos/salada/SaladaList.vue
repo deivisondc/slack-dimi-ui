@@ -20,7 +20,7 @@ export default {
     return {
       formRoutes: {
         new: '/cadastro/prato/salada/new',
-        edit: '/cadastro/prato/salada/edit/',
+        edit: '/cadastro/prato/salada/edit',
       },
       dataTable: [
         {

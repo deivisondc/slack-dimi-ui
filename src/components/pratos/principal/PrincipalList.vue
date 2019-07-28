@@ -18,12 +18,12 @@ export default {
   },
   data() {
     return {
-      dataTable: [{}],
-      columns: [],
       formRoutes: {
         new: '/cadastro/prato/principal/new',
-        edit: '/cadastro/prato/principal/edit/',
+        edit: '/cadastro/prato/principal/edit',
       },
+      dataTable: [],
+      columns: [{}],
     };
   },
 };

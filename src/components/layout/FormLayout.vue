@@ -45,6 +45,10 @@ export default {
       type: Function,
       required: true,
     },
+    listUrl: {
+      type: String,
+      required: false,
+    },
   },
   methods: {
     submitForm() {
@@ -55,7 +59,11 @@ export default {
       });
     },
     cancelForm() {
-      this.$router.go(-1);
+      if (this.listUrl) {
+        this.$router.push(this.listUrl);
+      } else {
+        this.$router.go(-1);
+      }
     },
   },
 };

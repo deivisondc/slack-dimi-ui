@@ -79,12 +79,12 @@ export default {
   methods: {
     doEditData(data) {
       if (data._id && this.formRoutes.edit) {
-        this.goTo(`${this.formRoutes.edit}${data._id}`);
+        this.goTo(`${this.formRoutes.edit}/${data._id}`);
       }
     },
     doCopyData(data) {
       if (data._id && this.formRoutes.copy) {
-        this.goTo(`${this.formRoutes.copy}${data._id}`);
+        this.goTo(`${this.formRoutes.copy}/${data._id}`);
       }
     },
     doDeleteData(data) {

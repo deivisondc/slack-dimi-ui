@@ -18,6 +18,10 @@ export default {
   },
   data() {
     return {
+      formRoutes: {
+        new: '/cadastro/prato/acompanhamento/new',
+        edit: '/cadastro/prato/acompanhamento/edit',
+      },
       dataTable: [
         {
           _id: 123,
@@ -31,10 +35,6 @@ export default {
           value: 'name',
         },
       ],
-      formRoutes: {
-        new: '/cadastro/prato/acompanhamento/new',
-        edit: '/cadastro/prato/acompanhamento/edit/',
-      },
     };
   },
 };
