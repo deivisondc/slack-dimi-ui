@@ -1,12 +1,12 @@
 <template>
   <app-list-layout
     :title="'Cardápio'"
-    :sub-title="'Listagem dos cardápios por dias da semana'"
+    :sub-title="'Listagem do cardápio por dias da semana'"
     :data-table="dataTable"
     :columns="columns"
     :form-route="formRoute"
     :showFilter="true"
-    :filterFunction="teste">
+    :filterFunction="applyFilter">
 
     <template slot="secondaryFilter">
       <el-row>
@@ -59,9 +59,8 @@ export default {
     };
   },
   methods: {
-    teste() {
-      console.log(this.selectedWeekDayFilter);
-      this.filterResults = 'asd';
+    applyFilter(filterValue) {
+      this.filterResults = filterValue;
     }
   }
 };
