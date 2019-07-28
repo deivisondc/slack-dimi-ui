@@ -20,7 +20,7 @@
 
     <template v-if="showFilter">
       <el-row style="padding: 20px;">
-        <el-input placeholder="Filtro" v-model="filterValue" class="input-with-select">
+        <el-input placeholder="Filtro" v-model="filterValue" class="input-with-select" @change="filter">
           <el-button slot="append" icon="el-icon-search" @click="filter"></el-button>
         </el-input>
       </el-row>
@@ -82,7 +82,7 @@ export default {
   methods: {
     filter() {
       if (this.filterFunction) {
-        this.filterFunction();
+        this.filterFunction(this.filterValue);
       }
     },
     goTo(route) {
