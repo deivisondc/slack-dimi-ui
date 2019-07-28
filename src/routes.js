@@ -17,6 +17,7 @@ const routes = [
   { path: '/cadastro/cardapio/edit/:id', component: CardapioForm },
   { path: '/cadastro/prato/principal', component: PrincipalList },
   { path: '/cadastro/prato/principal/new', component: PrincipalForm },
+  { path: '/cadastro/prato/principal/edit/:id', component: PrincipalForm },
   { path: '/cadastro/prato/acompanhamento', component: AcompanhamentoList },
   { path: '/cadastro/prato/acompanhamento/new', component: AcompanhamentoForm },
   { path: '/cadastro/prato/acompanhamento/edit/:id', component: AcompanhamentoForm },

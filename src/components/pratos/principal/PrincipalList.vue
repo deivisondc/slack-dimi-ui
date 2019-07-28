@@ -4,7 +4,8 @@
     :sub-title="'Listagem de todos os pratos principais cadastrados'"
     :data-table="dataTable"
     :columns="columns"
-    :form-route="formRoute"
+    :form-routes="formRoutes"
+    :showButtonsCell="true"
   />
 </template>
 
@@ -19,7 +20,10 @@ export default {
     return {
       dataTable: [{}],
       columns: [],
-      formRoute: '/cadastro/prato/principal/new',
+      formRoutes: {
+        new: '/cadastro/prato/principal/new',
+        edit: '/cadastro/prato/principal/edit/',
+      },
     };
   },
 };
