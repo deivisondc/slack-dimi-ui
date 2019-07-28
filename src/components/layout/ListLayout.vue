@@ -10,10 +10,10 @@
 
     <br>
     <el-button
-      v-if="formRoute"
+      v-if="formRoutes.new"
       type="success"
       round
-      @click="goTo(formRoute)"
+      @click="goTo(formRoutes.new)"
     >
       Cadastrar
     </el-button>
@@ -31,6 +31,9 @@
     <app-table-list
       :data-table="dataTable"
       :columns="columns"
+      :showButtonsCell="showButtonsCell"
+      :showCopyButton="showCopyButton"
+      :formRoutes="formRoutes"
     />
   </el-card>
 </template>
@@ -59,10 +62,19 @@ export default {
       type: Array,
       required: true,
     },
-    formRoute: {
-      type: String,
-      default: '',
+    formRoutes: {
+      type: Object,
       required: false,
+    },
+    showButtonsCell: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showCopyButton: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     showFilter: {
       type: Boolean,
