@@ -4,7 +4,7 @@
     :on-submit="save"
   >
     <template slot="title">
-      Prato principal
+      Prato Principal
     </template>
     <template>
       <el-form-item label="Descrição">
