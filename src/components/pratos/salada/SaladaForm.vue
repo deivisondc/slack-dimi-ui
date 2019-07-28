@@ -32,22 +32,23 @@ export default {
       },
       formRules: {
         description: [
-          { required: true, message: 'Descrição é requerida.' }
-        ]
-      }
+          { required: true, message: 'Descrição é requerida.' },
+        ],
+      },
     };
   },
   created() {
     if (this.$route.params.id) {
-      const id = this.$route.params.id;
+      const [id] = this.$route.params;
       this.findById(id);
     }
   },
   methods: {
-    findById() {
+    findById(id) {
+      this.id = id;
     },
     save() {
-      const action = this.$route.params.action;
+      const [action] = this.$route.params;
       if (action === 'edit') {
         this.$router.push(this.listUrl);
       } else {

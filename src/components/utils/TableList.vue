@@ -18,9 +18,25 @@
         width="150">
         <template slot-scope="scope">
           <div class="buttons-cell-align-right">
-            <el-button icon="el-icon-edit" class="btn-edit" circle size="small" @click.stop="doEditData(scope.row)"/>
-            <el-button icon="el-icon-copy-document" class="btn-copy" circle size="small" @click.stop="doCopyData(scope.row)" v-if="showCopyButton"/>
-            <el-button icon="el-icon-delete" class="btn-delete" circle size="small" @click.stop="dialogVisible = true"/>
+            <el-button
+              icon="el-icon-edit"
+              class="btn-edit"
+              circle
+              size="small"
+              @click.stop="doEditData(scope.row)"/>
+            <el-button
+              icon="el-icon-copy-document"
+              class="btn-copy"
+              circle
+              size="small"
+              @click.stop="doCopyData(scope.row)"
+              v-if="showCopyButton"/>
+            <el-button
+              icon="el-icon-delete"
+              class="btn-delete"
+              circle
+              size="small"
+              @click.stop="dialogVisible = true"/>
           </div>
 
           <el-dialog
@@ -95,7 +111,7 @@ export default {
     goTo(route) {
       this.$router.push(route);
     },
-  }
+  },
 };
 </script>
 

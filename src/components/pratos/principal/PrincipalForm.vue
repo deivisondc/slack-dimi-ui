@@ -31,14 +31,17 @@ export default {
       },
       formRules: {
         description: [
-          { required: true, message: 'Descrição é requerida.'},
+          { required: true, message: 'Descrição é requerida.' },
         ],
       },
     };
   },
   methods: {
+    findById(id) {
+      this.id = id;
+    },
     save() {
-      const action = this.$route.params.action;
+      const [action] = this.$route.params;
       if (action === 'edit') {
         this.$router.push(this.listUrl);
       } else {
@@ -48,7 +51,8 @@ export default {
   },
   created() {
     if (this.$route.params.id) {
-      const id = this.$route.params.id;
+      const [id] = this.$route.params;
+      this.findById(id);
     }
   },
 };

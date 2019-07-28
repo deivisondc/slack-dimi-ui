@@ -5,14 +5,14 @@
       :placeholder="placeholder"
       style="width: 100%"
     >
-      <el-option 
+      <el-option
         v-for="(weekDay, index) in weekDaysFiltered"
         :key="index"
         :label="weekDay"
         :value="index"
       />
     </el-select>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -49,15 +49,15 @@ export default {
   computed: {
     weekDaysFiltered() {
       if (!this.showWeekend) {
-        let weekDaysFiltered = Object.assign({}, this.weekDays);
+        const weekDaysFiltered = Object.assign({}, this.weekDays);
         delete weekDaysFiltered[0];
         delete weekDaysFiltered[6];
         return weekDaysFiltered;
       }
       return this.weekDays;
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
