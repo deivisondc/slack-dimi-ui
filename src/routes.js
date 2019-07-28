@@ -13,6 +13,8 @@ import SaladaForm from './components/pratos/salada/SaladaForm.vue';
 const routes = [
   { path: '/cadastro/cardapio', component: CardapioList },
   { path: '/cadastro/cardapio/new', component: CardapioForm },
+  { path: '/cadastro/cardapio/copy/:id', component: CardapioForm },
+  { path: '/cadastro/cardapio/edit/:id', component: CardapioForm },
   { path: '/cadastro/prato/principal', component: PrincipalList },
   { path: '/cadastro/prato/principal/new', component: PrincipalForm },
   { path: '/cadastro/prato/acompanhamento', component: AcompanhamentoList },

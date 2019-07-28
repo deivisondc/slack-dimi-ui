@@ -87,10 +87,21 @@ export default {
     };
   },
   methods: {
+    findById(id) {
+
+    },
     save() {
       return true;
     },
   },
+  created() {
+    this.form.weekDay = this.$route.query.weekDay || null;
+
+    if (this.$route.query.copyId || this.$route.query.id) {
+      const id = this.$route.query.copyId || this.$route.query.id;
+      this.form = findById(id);
+    }
+  }
 };
 </script>
 

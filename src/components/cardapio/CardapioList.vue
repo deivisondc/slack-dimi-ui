@@ -4,9 +4,11 @@
     :sub-title="'Listagem do cardápio por dias da semana'"
     :data-table="dataTable"
     :columns="columns"
-    :form-route="formRoute"
+    :form-routes="formRoutes"
     :showFilter="true"
-    :filterFunction="applyFilter">
+    :filterFunction="applyFilter"
+    :showButtonsCell="true"
+    :showCopyButton="true">
 
     <template slot="secondaryFilter">
       <el-row>
@@ -43,6 +45,7 @@ export default {
     return {
       dataTable: [
         {
+          _id: '123',
           weekday: 'Segunda-feira',
           menuItem: 'Churrasco com medalhão de frango fritas e vinagrete'
         }
@@ -53,10 +56,18 @@ export default {
           value: 'menuItem'
         },
       ],
-      formRoute: '/cadastro/cardapio/new',
       selectedWeekDayFilter: 1,
       filterResults: '',
     };
+  },
+  computed: {
+    formRoutes() {
+      return {
+        new: `/cadastro/cardapio/new?weekDay=${this.selectedWeekDayFilter}`,
+        edit: `/cadastro/cardapio/edit/`,
+        copy: `/cadastro/cardapio/copy/`,
+      };
+    },
   },
   methods: {
     applyFilter(filterValue) {
