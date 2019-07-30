@@ -179,9 +179,9 @@ export default {
   computed: {
     formRoutes() {
       return {
-        new: `/cadastro/cardapio/new?weekDay=${this.selectedWeekDayFilter}`,
-        edit: '/cadastro/cardapio/edit',
-        copy: '/cadastro/cardapio/copy',
+        new: `/menu/new?weekDay=${this.selectedWeekDayFilter}`,
+        edit: '/menu/edit',
+        copy: '/menu/copy',
       };
     },
     filterMenuByWeekDay() {
@@ -190,7 +190,7 @@ export default {
     },
   },
   created() {
-    this.resetFilterVariables()
+    this.resetFilterVariables();
     if (this.$route.query.weekDay) {
       this.selectedWeekDayFilter = this.$route.query.weekDay;
     } else {

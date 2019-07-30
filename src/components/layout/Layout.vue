@@ -8,7 +8,7 @@
       >
         <el-menu-item
           index="1"
-          @click="goTo('/cadastro/cardapio')"
+          @click="goTo('/menu')"
         >
           Cardápio
         </el-menu-item>

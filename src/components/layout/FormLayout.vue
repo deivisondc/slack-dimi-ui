@@ -11,6 +11,7 @@
       ref="form"
       :model="formModel"
       :rules="formRules"
+      :validate-on-rule-change="false"
       label-width="150px"
       class="form-content"
     >

@@ -14,36 +14,37 @@
         <el-form-item label="Dia da Semana" prop="weekDay">
           <app-select-week-day
             :model="form"
-            :placeholder="'Selecione um dia da semana'"
+            :placeholder="'Selecione um ou mais dias da semana'"
+            :multiple="true"
             :show-weekend="false"
           />
         </el-form-item>
-        <el-form-item label="Prato Principal" prop="mainFood">
+        <el-form-item label="Prato Principal" prop="mainDish">
           <el-select
-            v-model="form.mainFood"
+            v-model="form.mainDish"
             placeholder="Selecione um prato principal"
             style="width: 100%"
           >
             <el-option
-              v-for="pratoPrincipal in pratosPrincipais"
-              :key="pratoPrincipal.name"
-              :label="pratoPrincipal.name"
-              :value="pratoPrincipal"
+              v-for="mainDish in mainDishes"
+              :key="mainDish._id"
+              :label="mainDish.description"
+              :value="mainDish._id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Acompanhamentos" prop="secondaryFood">
+        <el-form-item label="Acompanhamentos" prop="sideDish">
           <el-select
-            v-model="form.secondaryFood"
+            v-model="form.sideDish"
             multiple
             placeholder="Selecione um ou mais acompanhamentos"
             style="width:100%"
           >
             <el-option
-              v-for="acompanhamento in acompanhamentos"
-              :key="acompanhamento"
-              :label="acompanhamento"
-              :value="acompanhamento"
+              v-for="sideDish in sideDishes"
+              :key="sideDish._id"
+              :label="sideDish.description"
+              :value="sideDish._id"
             />
           </el-select>
         </el-form-item>
@@ -53,9 +54,10 @@
             style="width: 100%; text-align: left"
           >
             <el-checkbox
-              v-for="salada in saladas"
-              :key="salada"
-              :label="salada"
+              v-for="salad in salads"
+              :key="salad._id"
+              :label="salad.description"
+              :value="salad._id"
               name="type"
               checked
             />
@@ -77,39 +79,51 @@ export default {
   },
   data() {
     return {
-      listUrl: '/cadastro/cardapio',
+      listUrl: '/menu',
       form: {
-        weekDay: '',
-        mainFood: '',
-        secondaryFood: [],
+        weekDay: [],
+        mainDish: null,
+        sideDish: [],
         salad: [],
       },
       formRules: {
         weekDay: [
-          { required: true, message: 'Selecione o dia da semana.' },
+          { required: true, type: 'array', message: 'Selecione pelo menos um dia da semana.' },
         ],
-        mainFood: [
+        mainDish: [
           { required: true, message: 'Selecione o prato principal.' },
         ],
-        secondaryFood: [
+        sideDish: [
           { required: true, type: 'array', message: 'Selecione pelo menos um acompanhamento.' },
         ],
         salad: [
           { required: true, type: 'array', message: 'Selecione pelo menos uma salada.' },
         ],
       },
-      saladas: ['Alface e Tomate em rodelas', 'Vinagrete'],
-      acompanhamentos: ['Ovo e Couve', 'Legumes na mateiga', 'Teste3', 'Teste4'],
-      pratosPrincipais: [
-        { name: 'Cupim' }, { name: 'Panqueca' }, { name: 'Churrasco' }],
+      salads: [
+        { _id: 1, description: 'Alface e Tomate em rodelas' },
+        { _id: 2, description: 'Vinagrete' },
+      ],
+      sideDishes: [
+        { _id: 1, description: 'Ovo e Couve' },
+        { _id: 2, description: 'Legumes na mateiga' },
+        { _id: 3, description: 'Teste3' },
+        { _id: 4, description: 'Teste4' },
+      ],
+      mainDishes: [
+        { _id: 1, description: 'Cupim' },
+        { _id: 2, description: 'Panqueca' },
+        { _id: 3, description: 'Churrasco' },
+      ],
     };
   },
   created() {
-    this.form.weekDay = this.$route.query.weekDay || null;
+    if (this.$route.query.weekDay) {
+      this.form.weekDay.push(this.$route.query.weekDay);
+    }
 
     if (this.$route.params.id) {
-      const [id] = this.$route.params;
-      this.findById(id);
+      this.findById(this.$route.params.id);
     }
   },
   methods: {

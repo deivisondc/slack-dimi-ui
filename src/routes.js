@@ -1,5 +1,5 @@
-import CardapioList from './components/cardapio/CardapioList.vue';
-import CardapioForm from './components/cardapio/CardapioForm.vue';
+import MenuList from './components/menu/MenuList.vue';
+import MenuForm from './components/menu/MenuForm.vue';
 
 import PrincipalList from './components/pratos/principal/PrincipalList.vue';
 import PrincipalForm from './components/pratos/principal/PrincipalForm.vue';
@@ -11,9 +11,9 @@ import SaladaList from './components/pratos/salada/SaladaList.vue';
 import SaladaForm from './components/pratos/salada/SaladaForm.vue';
 
 const routes = [
-  { path: '/cadastro/cardapio', component: CardapioList },
-  { path: '/cadastro/cardapio/:action', component: CardapioForm },
-  { path: '/cadastro/cardapio/:action/:id', component: CardapioForm },
+  { path: '/menu', component: MenuList },
+  { path: '/menu/:action', component: MenuForm },
+  { path: '/menu/:action/:id', component: MenuForm },
   { path: '/cadastro/prato/principal', component: PrincipalList },
   { path: '/cadastro/prato/principal/:action', component: PrincipalForm },
   { path: '/cadastro/prato/principal/:action/:id', component: PrincipalForm },
