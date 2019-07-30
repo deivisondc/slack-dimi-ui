@@ -3,6 +3,7 @@
     <el-select
       v-model="model.weekDay"
       :placeholder="placeholder"
+      :multiple="multiple"
       style="width: 100%"
     >
       <el-option
@@ -31,6 +32,11 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    multiple: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {
