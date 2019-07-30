@@ -18,21 +18,21 @@
           </template>
           <el-menu-item
             index="2-1"
-            @click="goTo('/cadastro/prato/principal')"
+            @click="goTo('/dishes/mainDish')"
           >
-            Principal
+            Prato Principal
           </el-menu-item>
           <el-menu-item
             index="2-2"
-            @click="goTo('/cadastro/prato/acompanhamento')"
+            @click="goTo('/dishes/sideDish')"
           >
-            Acompanhamento
+            Acompanhamentos
           </el-menu-item>
           <el-menu-item
             index="2-3"
-            @click="goTo('/cadastro/prato/salada')"
+            @click="goTo('/dishes/salad')"
           >
-            Salada
+            Saladas
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -49,13 +49,7 @@
 </template>
 
 <script>
-// import Cardapio from '../cardapio/Cardapio.vue'
-// import SaladaForm from '../pratos/salada/SaladaForm.vue'
-
 export default {
-  // components: {
-  //     appCardapio: Cardapio
-  // }
   methods: {
     goTo(route) {
       this.$router.push(route);

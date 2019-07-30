@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      listUrl: '/cadastro/prato/acompanhamento',
+      listUrl: '/dishes/sideDish',
       form: {
         description: '',
       },
@@ -52,8 +52,7 @@ export default {
   },
   created() {
     if (this.$route.params.id) {
-      const [id] = this.$route.params;
-      this.findById(id);
+      this.findById(this.$route.params.id);
     }
   },
 };

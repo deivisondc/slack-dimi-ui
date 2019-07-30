@@ -6,8 +6,9 @@
     :list-url="listUrl"
   >
     <template slot="title">
-      Prato Principal
+      Saladas
     </template>
+
     <template>
       <el-form-item label="Descrição" prop="description">
         <el-input v-model="form.description" />
@@ -25,7 +26,7 @@ export default {
   },
   data() {
     return {
-      listUrl: '/cadastro/prato/principal',
+      listUrl: '/dishes/salad',
       form: {
         description: '',
       },
@@ -35,6 +36,11 @@ export default {
         ],
       },
     };
+  },
+  created() {
+    if (this.$route.params.id) {
+      this.findById(this.$route.params.id);
+    }
   },
   methods: {
     findById(id) {
@@ -49,16 +55,9 @@ export default {
       }
     },
   },
-  created() {
-    if (this.$route.params.id) {
-      const [id] = this.$route.params;
-      this.findById(id);
-    }
-  },
 };
 </script>
 
 <style scoped>
-
 
 </style>

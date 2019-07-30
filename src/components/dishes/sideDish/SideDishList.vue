@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       formRoutes: {
-        new: '/cadastro/prato/acompanhamento/new',
-        edit: '/cadastro/prato/acompanhamento/edit',
+        new: '/dishes/sideDish/new',
+        edit: '/dishes/sideDish/edit',
       },
       dataTable: [
         {
