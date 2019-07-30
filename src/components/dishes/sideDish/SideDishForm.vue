@@ -17,8 +17,7 @@
 </template>
 
 <script>
-
-import FormLayout from '../../layout/FormLayout.vue';
+import FormLayout from '@/components/layout/FormLayout.vue';
 
 export default {
   components: {

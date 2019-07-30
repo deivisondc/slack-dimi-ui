@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ListLayout from '../../layout/ListLayout.vue';
+import ListLayout from '@/components/layout/ListLayout.vue';
 
 export default {
   components: {

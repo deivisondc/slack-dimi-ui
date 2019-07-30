@@ -1,14 +1,14 @@
-import MenuList from './components/menu/MenuList.vue';
-import MenuForm from './components/menu/MenuForm.vue';
+import MenuList from '@/components/menu/MenuList.vue';
+import MenuForm from '@/components/menu/MenuForm.vue';
 
-import MainDishList from './components/dishes/mainDish/MainDishList.vue';
-import MainDishForm from './components/dishes/mainDish/MainDishForm.vue';
+import MainDishList from '@/components/dishes/mainDish/MainDishList.vue';
+import MainDishForm from '@/components/dishes/mainDish/MainDishForm.vue';
 
-import SideDishList from './components/dishes/sideDish/SideDishList.vue';
-import SideDishForm from './components/dishes/sideDish/SideDishForm.vue';
+import SideDishList from '@/components/dishes/sideDish/SideDishList.vue';
+import SideDishForm from '@/components/dishes/sideDish/SideDishForm.vue';
 
-import SaladList from './components/dishes/salad/SaladList.vue';
-import SaladForm from './components/dishes/salad/SaladForm.vue';
+import SaladList from '@/components/dishes/salad/SaladList.vue';
+import SaladForm from '@/components/dishes/salad/SaladForm.vue';
 
 const routes = [
   { path: '/menu', component: MenuList },

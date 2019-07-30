@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import TableList from '../utils/TableList.vue';
+import TableList from '@/components/utils/TableList.vue';
 
 export default {
   components: {
