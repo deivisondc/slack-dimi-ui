@@ -231,4 +231,15 @@ export default {
   .el-badge >>> sup {
     right: 20px !important;
   }
+  .el-badge >>> .el-radio-button__inner{
+    border-radius: 0px;
+  }
+  .el-badge:first-child >>> .el-radio-button__inner{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .el-badge:last-child >>> .el-radio-button__inner{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 </style>
