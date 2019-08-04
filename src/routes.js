@@ -1,3 +1,5 @@
+import Login from '@/components/login/Login.vue';
+
 import MenuList from '@/components/menu/MenuList.vue';
 import MenuForm from '@/components/menu/MenuForm.vue';
 
@@ -11,6 +13,7 @@ import SaladList from '@/components/dishes/salad/SaladList.vue';
 import SaladForm from '@/components/dishes/salad/SaladForm.vue';
 
 const routes = [
+  { path: '/login', component: Login },
   { path: '/menu', component: MenuList },
   { path: '/menu/:action', component: MenuForm },
   { path: '/menu/:action/:id', component: MenuForm },
@@ -23,6 +26,7 @@ const routes = [
   { path: '/dishes/salad', component: SaladList },
   { path: '/dishes/salad/:action', component: SaladForm },
   { path: '/dishes/salad/:action/:id', component: SaladForm },
+  { path: '*', redirect: '/login' },
 ];
 
 export default routes;
