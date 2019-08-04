@@ -54,6 +54,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <br>
+    <el-pagination
+      layout="prev, pager, next"
+      :page-size=10
+      :total=10
+      :hide-on-single-page=false
+    />
   </div>
 </template>
 
