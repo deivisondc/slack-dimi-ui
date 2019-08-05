@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     logon() {
+      this.$store.dispatch('login', { login: this.login, password: this.password });
       this.$router.push('/menu');
     },
   },
