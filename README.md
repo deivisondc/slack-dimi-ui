@@ -1,4 +1,4 @@
-# slack-dimi-ui
+# Slack Dimi UI
 
 ## Project setup
 ```
