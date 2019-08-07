@@ -114,6 +114,7 @@ export default {
       if (data._id && this.deleteFunction) {
         this.deleteFunction(data._id);
       }
+      this.dialogVisible = false;
     },
     goTo(route) {
       this.$router.push(route);

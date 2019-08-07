@@ -33,6 +33,7 @@
       :columns="columns"
       :showButtonsCell="showButtonsCell"
       :showCopyButton="showCopyButton"
+      :deleteFunction="deleteFunction"
       :formRoutes="formRoutes"
     />
   </el-card>
@@ -70,6 +71,10 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    deleteFunction: {
+      type: Function,
+      required: false,
     },
     showCopyButton: {
       type: Boolean,
