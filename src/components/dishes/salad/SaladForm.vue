@@ -20,6 +20,8 @@
 <script>
 import FormLayout from '@/components/layout/FormLayout.vue';
 
+import saladService from '@/services/modules/saladService';
+
 export default {
   components: {
     AppFormLayout: FormLayout,
@@ -28,6 +30,7 @@ export default {
     return {
       listUrl: '/dishes/salad',
       form: {
+        _id: null,
         description: '',
       },
       formRules: {
@@ -39,19 +42,27 @@ export default {
   },
   created() {
     if (this.$route.params.id) {
-      this.findById(this.$route.params.id);
+      saladService.find(this.$route.params.id)
+        .then((res) => {
+          this.form = res.data.result;
+        });
     }
   },
   methods: {
-    findById(id) {
-      this.id = id;
-    },
-    save() {
-      const [action] = this.$route.params;
-      if (action === 'edit') {
-        this.$router.push(this.listUrl);
+    async save() {
+      if (this.$route.params.action === 'edit') {
+        saladService.update(this.form._id, this.form)
+          .then(() => {
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       } else {
-        this.$router.push(this.listUrl);
+        saladService.create(this.form)
+          .then((res) => {
+            console.log(res);
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       }
     },
   },

@@ -6,11 +6,14 @@
     :columns="columns"
     :form-routes="formRoutes"
     :showButtonsCell="true"
+    :deleteFunction="deleteSalad"
   />
 </template>
 
 <script>
 import ListLayout from '@/components/layout/ListLayout.vue';
+
+import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
@@ -22,20 +25,32 @@ export default {
         new: '/dishes/salad/new',
         edit: '/dishes/salad/edit',
       },
-      dataTable: [
-        {
-          _id: 123,
-          name: 'joao',
-          address: 'teste xpto',
-        },
-      ],
+      dataTable: [],
       columns: [
         {
-          name: 'Primeira Coluna',
-          value: 'name',
+          name: 'Descrição',
+          value: 'description',
         },
       ],
     };
+  },
+  created() {
+    this.getAllSalads();
+  },
+  methods: {
+    getAllSalads() {
+      saladService.all()
+        .then((res) => {
+          this.dataTable = res.data.result;
+        });
+    },
+    deleteSalad(id) {
+      saladService.delete(id)
+        .then(() => {
+          this.getAllSalads();
+        })
+        .catch(err => console.log(err));
+    },
   },
 };
 </script>
