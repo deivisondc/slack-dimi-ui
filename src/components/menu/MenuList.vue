@@ -2,17 +2,18 @@
   <app-list-layout
     :title="'Cardápio'"
     :sub-title="'Listagem do cardápio por dias da semana'"
-    :data-table="filterMenuByWeekDay"
+    :data-table="filterMenuByWeekday"
     :columns="columns"
     :form-routes="formRoutes"
     :showFilter="true"
     :filterFunction="applyFilter"
     :showButtonsCell="true"
-    :showCopyButton="true">
+    :showCopyButton="true"
+    :deleteFunction="deleteMenu">
 
     <template slot="secondaryFilter">
       <el-row>
-        <el-radio-group v-model="selectedWeekDayFilter">
+        <el-radio-group v-model="selectedWeekdayFilter">
           <el-badge :value="filterResults[1]" class="item" type="primary" :hidden="!filterResults[1] > 0">
             <el-radio-button size="small" label="1">
               Segunda-feira
@@ -45,7 +46,14 @@
 </template>
 
 <script>
-import ListLayout from '../layout/ListLayout.vue';
+import lodash from 'lodash';
+
+import ListLayout from '@/components/layout/ListLayout.vue';
+
+import menuService from '@/services/modules/menuService';
+import mainDishService from '@/services/modules/mainDishService';
+import sideDishService from '@/services/modules/sideDishService';
+import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
@@ -53,125 +61,17 @@ export default {
   },
   data() {
     return {
-      dataTable: [
-        {
-          _id: '1',
-          weekday: 1,
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
-        },
-        {
-          _id: '2',
-          weekday: 1,
-          menuItem: 'Medalhão de frango',
-        },
-        {
-          _id: '3',
-          weekday: 1,
-          menuItem: 'Frango grelhado',
-        },
-        {
-          _id: '4',
-          weekday: 1,
-          menuItem: 'Teste',
-        },
-        {
-          _id: '5',
-          weekday: 2,
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
-        },
-        {
-          _id: '6',
-          weekday: 2,
-          menuItem: 'Estrogonofe',
-        },
-        {
-          _id: '7',
-          weekday: 3,
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
-        },
-        {
-          _id: '8',
-          weekday: 3,
-          menuItem: 'Bife Grelhado',
-        },
-        {
-          _id: '9',
-          weekday: 3,
-          menuItem: 'Frango Parmegiana',
-        },
-        {
-          _id: '10',
-          weekday: 3,
-          menuItem: 'Teste 2',
-        },
-        {
-          _id: '11',
-          weekday: 4,
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
-        },
-        {
-          _id: '12',
-          weekday: 4,
-          menuItem: 'Panqueca de Queijo',
-        },
-        {
-          _id: '13',
-          weekday: 4,
-          menuItem: 'Panqueca de Frango',
-        },
-        {
-          _id: '14',
-          weekday: 4,
-          menuItem: 'Panqueca de Calabresa',
-        },
-        {
-          _id: '15',
-          weekday: 4,
-          menuItem: 'Teste',
-        },
-        {
-          _id: '16',
-          weekday: 4,
-          menuItem: 'Teste 2',
-        },
-        {
-          _id: '17',
-          weekday: 5,
-          menuItem: 'Churrasco com medalhão de frango fritas e vinagrete',
-        },
-        {
-          _id: '18',
-          weekday: 5,
-          menuItem: 'Medalhão',
-        },
-        {
-          _id: '19',
-          weekday: 5,
-          menuItem: 'Cupim',
-        },
-        {
-          _id: '20',
-          weekday: 5,
-          menuItem: 'Frango',
-        },
-        {
-          _id: '21',
-          weekday: 5,
-          menuItem: 'Teste',
-        },
-        {
-          _id: '22',
-          weekday: 5,
-          menuItem: 'Teste 2',
-        },
-      ],
+      dataTable: [],
       columns: [
         {
           name: 'Prato',
-          value: 'menuItem',
+          value: 'fullDescription',
         },
       ],
-      selectedWeekDayFilter: 1,
+      mainDishList: [],
+      sideDishList: [],
+      saladList: [],
+      selectedWeekdayFilter: 1,
       filterResults: null,
       filteredDataTable: null,
     };
@@ -179,30 +79,94 @@ export default {
   computed: {
     formRoutes() {
       return {
-        new: `/menu/new?weekDay=${this.selectedWeekDayFilter}`,
+        new: `/menu/new?weekday=${this.selectedWeekdayFilter}`,
         edit: '/menu/edit',
         copy: '/menu/copy',
       };
     },
-    filterMenuByWeekDay() {
+    filterMenuByWeekday() {
       const copyDataTable = this.filteredDataTable || this.dataTable;
-      return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekDayFilter, 10));
+      return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekdayFilter, 10));
     },
   },
   created() {
     this.resetFilterVariables();
-    if (this.$route.query.weekDay) {
-      this.selectedWeekDayFilter = this.$route.query.weekDay;
+    if (this.$route.query.weekday) {
+      this.selectedWeekdayFilter = this.$route.query.weekday;
     } else {
       const dayOfWeek = new Date().getDay();
-      this.selectedWeekDayFilter = dayOfWeek >= 1 && dayOfWeek <= 5 ? dayOfWeek : 1;
+      this.selectedWeekdayFilter = dayOfWeek >= 1 && dayOfWeek <= 5 ? dayOfWeek : 1;
     }
+
+    this.getAllMenus();
   },
   methods: {
+    async getAllMenus() {
+      await this.getAllMainDishes();
+      await this.getAllSideDishes();
+      await this.getAllSalads();
+      menuService.all()
+        .then((res) => {
+          this.dataTable = res.data.result;
+
+          this.dataTable.forEach((el) => {
+            el.mainDishDescription = lodash.find(this.mainDishList, (o => o._id === el.main_dish_id)).description;
+
+            el.fullDescription = `${el.mainDishDescription} com <`;
+
+            let first = true;
+            el.side_dishes.forEach((sideDishId) => {
+              const { description } = lodash.find(this.sideDishList, (o => o._id === sideDishId));
+              el.fullDescription += first ? description : ` OU ${description}`;
+              first = false;
+            });
+
+            el.fullDescription += '> + <';
+
+            first = true;
+            el.salads.forEach((saladId) => {
+              const { description } = lodash.find(this.saladList, (o => o._id === saladId));
+              el.fullDescription += first ? description : ` OU ${description}`;
+              first = false;
+            });
+
+            el.fullDescription += '>';
+          });
+        })
+        .catch(err => console.log(err));
+    },
+    getAllMainDishes() {
+      return mainDishService.all()
+        .then((res) => {
+          this.mainDishList = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    getAllSideDishes() {
+      return sideDishService.all()
+        .then((res) => {
+          this.sideDishList = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    getAllSalads() {
+      return saladService.all()
+        .then((res) => {
+          this.saladList = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    deleteMenu(id) {
+      menuService.delete(id)
+        .then(() => {
+          this.getAllMenus();
+        })
+        .catch(err => console.log(err));
+    },
     applyFilter(filterValue) {
       if (!filterValue) return this.resetFilterVariables();
       this.filteredDataTable = this.dataTable.filter(
-        item => item.menuItem.toLowerCase().includes(filterValue.toLowerCase()),
+        item => item.fullDescription.toLowerCase().includes(filterValue.toLowerCase()),
       );
 
       this.filterResults[1] = this.filteredDataTable.filter(item => item.weekday === 1).length;

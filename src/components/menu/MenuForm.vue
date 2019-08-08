@@ -11,57 +11,69 @@
       </template>
 
       <template>
-        <el-form-item label="Dia da Semana" prop="weekDay">
-          <app-select-week-day
+        <el-form-item label="Dia da Semana" prop="weekday">
+          <app-select-weekday
             :model="form"
             :placeholder="'Selecione um ou mais dias da semana'"
-            :multiple="true"
+            :multiple="!isEditing"
             :show-weekend="false"
           />
         </el-form-item>
-        <el-form-item label="Prato Principal" prop="mainDish">
+        <el-form-item label="Prato Principal" prop="main_dish_id">
           <el-select
-            v-model="form.mainDish"
+            v-model="form.main_dish_id"
             placeholder="Selecione um prato principal"
             style="width: 100%"
           >
             <el-option
-              v-for="mainDish in mainDishes"
+              v-for="mainDish in mainDishesList"
               :key="mainDish._id"
               :label="mainDish.description"
               :value="mainDish._id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Acompanhamentos" prop="sideDish">
+        <el-form-item label="Acompanhamentos" prop="side_dishes">
           <el-select
-            v-model="form.sideDish"
+            v-model="form.side_dishes"
             multiple
             placeholder="Selecione um ou mais acompanhamentos"
             style="width:100%"
           >
             <el-option
-              v-for="sideDish in sideDishes"
+              v-for="sideDish in sideDishesList"
               :key="sideDish._id"
               :label="sideDish.description"
               :value="sideDish._id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Saladas" prop="salad">
-          <el-checkbox-group
-            v-model="form.salad"
-            style="width: 100%; text-align: left"
+        <el-form-item label="Saladas" prop="salads">
+          <el-select
+            v-model="form.salads"
+            multiple
+            placeholder="Selecione uma ou mais saladas"
+            style="width:100%"
           >
-            <el-checkbox
-              v-for="salad in salads"
+            <el-option
+              v-for="salad in saladsList"
               :key="salad._id"
               :label="salad.description"
               :value="salad._id"
-              name="type"
+            />
+          </el-select>
+          <!-- <el-checkbox-group
+            v-model="form.salads"
+            style="width: 100%; text-align: left"
+          >
+            <el-checkbox
+              v-for="salad in saladsList"
+              :key="salad._id"
+              :label="salad.description"
+              :value="salad._id"
               checked
             />
-          </el-checkbox-group>
+          </el-checkbox-group> -->
         </el-form-item>
       </template>
     </app-form-layout>
@@ -69,73 +81,117 @@
 </template>
 
 <script>
-import FormLayout from '../layout/FormLayout.vue';
-import SelectWeekDay from '../utils/SelectWeekDay.vue';
+import FormLayout from '@/components/layout/FormLayout.vue';
+import SelectWeekday from '@/components/utils/SelectWeekday.vue';
+
+import menuService from '@/services/modules/menuService';
+import mainDishService from '@/services/modules/mainDishService';
+import sideDishService from '@/services/modules/sideDishService';
+import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
     AppFormLayout: FormLayout,
-    AppSelectWeekDay: SelectWeekDay,
+    AppSelectWeekday: SelectWeekday,
   },
   data() {
     return {
       listUrl: '/menu',
       form: {
-        weekDay: [],
-        mainDish: null,
-        sideDish: [],
-        salad: [],
+        _id: null,
+        weekday: [],
+        main_dish_id: null,
+        side_dishes: [],
+        salads: [],
       },
       formRules: {
-        weekDay: [
-          { required: true, type: 'array', message: 'Selecione pelo menos um dia da semana.' },
+        weekday: [
+          { required: true, message: 'Selecione pelo menos um dia da semana.' },
         ],
-        mainDish: [
+        main_dish_id: [
           { required: true, message: 'Selecione o prato principal.' },
         ],
-        sideDish: [
+        side_dishes: [
           { required: true, type: 'array', message: 'Selecione pelo menos um acompanhamento.' },
         ],
-        salad: [
+        salads: [
           { required: true, type: 'array', message: 'Selecione pelo menos uma salada.' },
         ],
       },
-      salads: [
-        { _id: 1, description: 'Alface e Tomate em rodelas' },
-        { _id: 2, description: 'Vinagrete' },
-      ],
-      sideDishes: [
-        { _id: 1, description: 'Ovo e Couve' },
-        { _id: 2, description: 'Legumes na mateiga' },
-        { _id: 3, description: 'Teste3' },
-        { _id: 4, description: 'Teste4' },
-      ],
-      mainDishes: [
-        { _id: 1, description: 'Cupim' },
-        { _id: 2, description: 'Panqueca' },
-        { _id: 3, description: 'Churrasco' },
-      ],
+      mainDishesList: [],
+      sideDishesList: [],
+      saladsList: [],
     };
   },
-  created() {
-    if (this.$route.query.weekDay) {
-      this.form.weekDay.push(this.$route.query.weekDay);
+  computed: {
+    isEditing() {
+      return this.$route.params.action === 'edit';
+    },
+  },
+  async created() {
+    this.getAllMainDishes();
+    this.getAllSideDishes();
+    this.getAllSalads()
+      .then(() => {
+        this.form.salads = this.saladsList.map(salad => salad._id);
+      });
+
+    if (this.$route.query.weekday) {
+      this.form.weekday.push(this.$route.query.weekday);
     }
 
     if (this.$route.params.id) {
-      this.findById(this.$route.params.id);
+      menuService.find(this.$route.params.id)
+        .then((res) => {
+          const { result } = res.data;
+
+          if (this.$route.params.action === 'copy') {
+            result._id = null;
+            result.weekday = [];
+          } else {
+            result.weekday = result.weekday.toString();
+          }
+
+          this.form = result;
+        })
+        .catch(err => console.log(err));
     }
   },
   methods: {
-    findById(id) {
-      this.id = id;
+    getAllMainDishes() {
+      mainDishService.all()
+        .then((res) => {
+          this.mainDishesList = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    getAllSideDishes() {
+      sideDishService.all()
+        .then((res) => {
+          this.sideDishesList = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    async getAllSalads() {
+      return saladService.all()
+        .then((res) => {
+          this.saladsList = res.data.result;
+        })
+        .catch(err => console.log(err));
     },
     save() {
-      const [action] = this.$route.params;
-      if (action === 'edit') {
-        this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
+      if (this.isEditing) {
+        menuService.update(this.form._id, this.form)
+          .then(() => {
+            this.$router.push(`${this.listUrl}?weekday=${this.form.weekday}`);
+          })
+          .catch(err => console.log(err));
       } else {
-        this.$router.push(`${this.listUrl}?weekDay=${this.form.weekDay}`);
+        menuService.create(this.form)
+          .then(() => {
+            this.$router.push(`${this.listUrl}?weekday=${this.form.weekday}`);
+          })
+          .catch(err => console.log(err));
       }
     },
   },
