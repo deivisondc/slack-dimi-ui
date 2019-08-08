@@ -19,6 +19,8 @@
 <script>
 import FormLayout from '@/components/layout/FormLayout.vue';
 
+import mainDishService from '@/services/modules/mainDishService';
+
 export default {
   components: {
     AppFormLayout: FormLayout,
@@ -27,6 +29,7 @@ export default {
     return {
       listUrl: '/dishes/mainDish',
       form: {
+        _id: null,
         description: '',
       },
       formRules: {
@@ -37,21 +40,29 @@ export default {
     };
   },
   methods: {
-    findById(id) {
-      this.id = id;
-    },
     save() {
-      const [action] = this.$route.params;
-      if (action === 'edit') {
-        this.$router.push(this.listUrl);
+      if (this.$route.params.action === 'edit') {
+        mainDishService.update(this.form._id, this.form)
+          .then(() => {
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       } else {
-        this.$router.push(this.listUrl);
+        mainDishService.create(this.form)
+          .then(() => {
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       }
     },
   },
   created() {
     if (this.$route.params.id) {
-      this.findById(this.$route.params.id);
+      mainDishService.find(this.$route.params.id)
+        .then((res) => {
+          this.form = res.data.result;
+        })
+        .catch(err => console.log(err));
     }
   },
 };

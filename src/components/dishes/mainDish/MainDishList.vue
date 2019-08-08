@@ -6,11 +6,14 @@
     :columns="columns"
     :form-routes="formRoutes"
     :showButtonsCell="true"
+    :deleteFunction="deleteMainDish"
   />
 </template>
 
 <script>
 import ListLayout from '@/components/layout/ListLayout.vue';
+
+import mainDishService from '@/services/modules/mainDishService';
 
 export default {
   components: {
@@ -23,8 +26,32 @@ export default {
         edit: '/dishes/mainDish/edit',
       },
       dataTable: [],
-      columns: [{}],
+      columns: [
+        {
+          name: 'Descrição',
+          value: 'description',
+        },
+      ],
     };
+  },
+  created() {
+    this.getAllMainDishes();
+  },
+  methods: {
+    getAllMainDishes() {
+      mainDishService.all()
+        .then((res) => {
+          this.dataTable = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    deleteMainDish(id) {
+      mainDishService.delete(id)
+        .then(() => {
+          this.getAllMainDishes();
+        })
+        .catch(err => console.log(err));
+    },
   },
 };
 </script>
