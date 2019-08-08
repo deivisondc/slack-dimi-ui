@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-select
-      v-model="model.weekDay"
+      v-model="model.weekday"
       :placeholder="placeholder"
       :multiple="multiple"
       style="width: 100%"
     >
       <el-option
-        v-for="(weekDay, index) in weekDaysFiltered"
+        v-for="(weekday, index) in weekdaysFiltered"
         :key="index"
-        :label="weekDay"
+        :label="weekday"
         :value="index"
       />
     </el-select>
@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      weekDays: {
+      weekdays: {
         0: 'Domingo',
         1: 'Segunda-feira',
         2: 'Terça-feira',
@@ -53,14 +53,14 @@ export default {
     };
   },
   computed: {
-    weekDaysFiltered() {
+    weekdaysFiltered() {
       if (!this.showWeekend) {
-        const weekDaysFiltered = Object.assign({}, this.weekDays);
-        delete weekDaysFiltered[0];
-        delete weekDaysFiltered[6];
-        return weekDaysFiltered;
+        const weekdaysFiltered = Object.assign({}, this.weekdays);
+        delete weekdaysFiltered[0];
+        delete weekdaysFiltered[6];
+        return weekdaysFiltered;
       }
-      return this.weekDays;
+      return this.weekdays;
     },
   },
 };
