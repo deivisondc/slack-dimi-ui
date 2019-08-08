@@ -6,11 +6,14 @@
     :columns="columns"
     :form-routes="formRoutes"
     :showButtonsCell="true"
+    :deleteFunction="deleteSideDish"
   />
 </template>
 
 <script>
 import ListLayout from '@/components/layout/ListLayout.vue';
+
+import sideDishService from '@/services/modules/sideDishService';
 
 export default {
   components: {
@@ -22,20 +25,33 @@ export default {
         new: '/dishes/sideDish/new',
         edit: '/dishes/sideDish/edit',
       },
-      dataTable: [
-        {
-          _id: 123,
-          name: 'joao',
-          address: 'teste xpto',
-        },
-      ],
+      dataTable: [],
       columns: [
         {
-          name: 'Primeira Coluna',
-          value: 'name',
+          name: 'Descrição',
+          value: 'description',
         },
       ],
     };
+  },
+  created() {
+    this.getAllSideDishes();
+  },
+  methods: {
+    getAllSideDishes() {
+      sideDishService.all()
+        .then((res) => {
+          this.dataTable = res.data.result;
+        })
+        .catch(err => console.log(err));
+    },
+    deleteSideDish(id) {
+      sideDishService.delete(id)
+        .then(() => {
+          this.getAllSideDishes();
+        })
+        .catch(err => console.log(err));
+    },
   },
 };
 </script>

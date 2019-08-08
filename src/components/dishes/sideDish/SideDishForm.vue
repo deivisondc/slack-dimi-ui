@@ -19,6 +19,8 @@
 <script>
 import FormLayout from '@/components/layout/FormLayout.vue';
 
+import sideDishService from '@/services/modules/sideDishService';
+
 export default {
   components: {
     AppFormLayout: FormLayout,
@@ -27,6 +29,7 @@ export default {
     return {
       listUrl: '/dishes/sideDish',
       form: {
+        _id: null,
         description: '',
       },
       formRules: {
@@ -41,17 +44,28 @@ export default {
       this.id = id;
     },
     save() {
-      const [action] = this.$route.params;
-      if (action === 'edit') {
-        this.$router.push(this.listUrl);
+      if (this.$route.params.action === 'edit') {
+        sideDishService.update(this.form._id, this.form)
+          .then(() => {
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       } else {
-        this.$router.push(this.listUrl);
+        sideDishService.create(this.form)
+          .then(() => {
+            this.$router.push(this.listUrl);
+          })
+          .catch(err => console.log(err));
       }
     },
   },
   created() {
     if (this.$route.params.id) {
-      this.findById(this.$route.params.id);
+      sideDishService.find(this.$route.params.id)
+        .then((res) => {
+          this.form = res.data.result;
+        })
+        .catch(err => console.log(err));
     }
   },
 };
