@@ -2,21 +2,21 @@ import axios from '@/services/axios.js';
 
 export default {
   all() {
-    return axios.get('/menu/', {});
+    return axios.get('/menu/');
   },
   list(params) {
-    axios.get('/menu/', {});
+    return axios.get('/menu/', params);
   },
   find(id) {
-    axios.get('/menu/', {_id: id});
+    return axios.get(`/menu/${id}`);
   },
   create(data) {
-    axios.post('/menu/', data);
+    return axios.post('/menu/', data);
   },
   update(id, data) {
-    axios.patch('/menu/', data);
+    return axios.patch(`/menu/${id}`, data);
   },
   delete(id) {
-    axios.delete('/menu/');
+    return axios.delete(`/menu/${id}`);
   },
 };
