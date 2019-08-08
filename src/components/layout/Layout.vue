@@ -5,7 +5,7 @@
         class="el-menu"
         mode="horizontal"
         style="padding-left: 50px"
-        background-color="#bdc3c7"
+        background-color="#ffffff"
         active-text-color="#153f8a"
         default-active=1
       >
@@ -96,11 +96,10 @@ export default {
         background-color: #b2b2b2;
     }
     .el-menu-item {
-      color:#2c3e50;
       transition: 0.25s;
     }
     .el-menu-item:hover, .el-menu-item:focus {
-      background-color: #bdc3c7 !important;
+      background-color: #ffffff !important;
       color: #153f8a !important;
       border-bottom-color: #153f8a !important;
     }
@@ -126,7 +125,7 @@ export default {
       height: 60px;
       align-items: center;
       padding-right: 10px;
-      background-color: #bdc3c7;
+      background-color: #ffffff;
       border-bottom: solid 3px #153f8a !important;
     }
 
