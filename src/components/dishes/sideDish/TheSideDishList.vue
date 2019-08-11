@@ -1,29 +1,29 @@
 <template>
-  <app-list-layout
-    :title="'Prato Principal'"
-    :sub-title="'Listagem de todos os pratos principais cadastrados'"
+  <base-list-layout
+    :title="'Acompanhamento'"
+    :sub-title="'Listagem de todos os acompanhamentos cadastrados'"
     :data-table="dataTable"
     :columns="columns"
     :form-routes="formRoutes"
     :showButtonsCell="true"
-    :deleteFunction="deleteMainDish"
+    :deleteFunction="deleteSideDish"
   />
 </template>
 
 <script>
-import ListLayout from '@/components/layout/ListLayout.vue';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
-import mainDishService from '@/services/modules/mainDishService';
+import sideDishService from '@/services/modules/sideDishService';
 
 export default {
   components: {
-    AppListLayout: ListLayout,
+    BaseListLayout,
   },
   data() {
     return {
       formRoutes: {
-        new: '/dishes/mainDish/new',
-        edit: '/dishes/mainDish/edit',
+        new: '/dishes/sideDish/new',
+        edit: '/dishes/sideDish/edit',
       },
       dataTable: [],
       columns: [
@@ -35,20 +35,20 @@ export default {
     };
   },
   created() {
-    this.getAllMainDishes();
+    this.getAllSideDishes();
   },
   methods: {
-    getAllMainDishes() {
-      mainDishService.all()
+    getAllSideDishes() {
+      sideDishService.all()
         .then((res) => {
           this.dataTable = res.data.result;
         })
         .catch(err => console.log(err));
     },
-    deleteMainDish(id) {
-      mainDishService.delete(id)
+    deleteSideDish(id) {
+      sideDishService.delete(id)
         .then(() => {
-          this.getAllMainDishes();
+          this.getAllSideDishes();
         })
         .catch(err => console.log(err));
     },

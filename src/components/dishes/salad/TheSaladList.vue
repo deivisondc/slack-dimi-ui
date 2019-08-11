@@ -1,5 +1,5 @@
 <template>
-  <app-list-layout
+  <base-list-layout
     :title="'Saladas'"
     :sub-title="'Listagem de todas as saladas cadastradas'"
     :data-table="dataTable"
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import ListLayout from '@/components/layout/ListLayout.vue';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
 import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
-    AppListLayout: ListLayout,
+    BaseListLayout,
   },
   data() {
     return {

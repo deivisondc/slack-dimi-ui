@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-form-layout
+    <base-form-layout
       :form-model="form"
       :form-rules="formRules"
       :on-submit="save"
@@ -76,12 +76,12 @@
           </el-checkbox-group> -->
         </el-form-item>
       </template>
-    </app-form-layout>
+    </base-form-layout>
   </div>
 </template>
 
 <script>
-import FormLayout from '@/components/layout/FormLayout.vue';
+import BaseFormLayout from '@/components/layout/BaseFormLayout';
 import SelectWeekday from '@/components/utils/SelectWeekday.vue';
 
 import menuService from '@/services/modules/menuService';
@@ -91,7 +91,7 @@ import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
-    AppFormLayout: FormLayout,
+    BaseFormLayout,
     AppSelectWeekday: SelectWeekday,
   },
   data() {

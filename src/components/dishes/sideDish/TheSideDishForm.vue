@@ -1,5 +1,5 @@
 <template>
-  <app-form-layout
+  <base-form-layout
     :form-model="form"
     :form-rules="formRules"
     :on-submit="save"
@@ -13,17 +13,17 @@
         <el-input v-model="form.description" />
       </el-form-item>
     </template>
-  </app-form-layout>
+  </base-form-layout>
 </template>
 
 <script>
-import FormLayout from '@/components/layout/FormLayout.vue';
+import BaseFormLayout from '@/components/layout/BaseFormLayout';
 
 import sideDishService from '@/services/modules/sideDishService';
 
 export default {
   components: {
-    AppFormLayout: FormLayout,
+    BaseFormLayout,
   },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <app-list-layout
+  <base-list-layout
     :title="'Cardápio'"
     :sub-title="'Listagem do cardápio por dias da semana'"
     :data-table="filterMenuByWeekday"
@@ -42,13 +42,13 @@
         </el-radio-group>
       </el-row>
     </template>
-  </app-list-layout>
+  </base-list-layout>
 </template>
 
 <script>
 import lodash from 'lodash';
 
-import ListLayout from '@/components/layout/ListLayout.vue';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
 import menuService from '@/services/modules/menuService';
 import mainDishService from '@/services/modules/mainDishService';
@@ -57,7 +57,7 @@ import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
-    AppListLayout: ListLayout,
+    BaseListLayout,
   },
   data() {
     return {

@@ -28,7 +28,7 @@
 
     <slot name="secondaryFilter" />
 
-    <app-table-list
+    <base-table-list
       :data-table="dataTable"
       :columns="columns"
       :showButtonsCell="showButtonsCell"
@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import TableList from '@/components/utils/TableList.vue';
+import BaseTableList from '@/components/utils/BaseTableList';
 
 export default {
   components: {
-    AppTableList: TableList,
+    BaseTableList,
   },
   props: {
     title: {

@@ -1,31 +1,30 @@
-import Login from '@/components/login/Login.vue';
+import TheLogin from '@/components/login/TheLogin';
 
-import MenuList from '@/components/menu/MenuList.vue';
-import MenuForm from '@/components/menu/MenuForm.vue';
+import TheMenuList from '@/components/menu/TheMenuList';
+import TheMenuForm from '@/components/menu/TheMenuForm';
 
-import MainDishList from '@/components/dishes/mainDish/MainDishList.vue';
-import MainDishForm from '@/components/dishes/mainDish/MainDishForm.vue';
+import TheMainDishList from '@/components/dishes/mainDish/TheMainDishList';
+import TheMainDishForm from '@/components/dishes/mainDish/TheMainDishForm';
 
-import SideDishList from '@/components/dishes/sideDish/SideDishList.vue';
-import SideDishForm from '@/components/dishes/sideDish/SideDishForm.vue';
-
-import SaladList from '@/components/dishes/salad/SaladList.vue';
-import SaladForm from '@/components/dishes/salad/SaladForm.vue';
+import TheSideDishList from '@/components/dishes/sideDish/TheSideDishList';
+import TheSideDishForm from '@/components/dishes/sideDish/TheSideDishForm';
+import TheSaladList from '@/components/dishes/salad/TheSaladList';
+import TheSaladForm from '@/components/dishes/salad/TheSaladForm';
 
 const routes = [
-  { path: '/login', component: Login },
-  { path: '/menu', component: MenuList },
-  { path: '/menu/:action', component: MenuForm },
-  { path: '/menu/:action/:id', component: MenuForm },
-  { path: '/dishes/mainDish', component: MainDishList },
-  { path: '/dishes/mainDish/:action', component: MainDishForm },
-  { path: '/dishes/mainDish/:action/:id', component: MainDishForm },
-  { path: '/dishes/sideDish', component: SideDishList },
-  { path: '/dishes/sideDish/:action', component: SideDishForm },
-  { path: '/dishes/sideDish/:action/:id', component: SideDishForm },
-  { path: '/dishes/salad', component: SaladList },
-  { path: '/dishes/salad/:action', component: SaladForm },
-  { path: '/dishes/salad/:action/:id', component: SaladForm },
+  { path: '/login', component: TheLogin },
+  { path: '/menu', component: TheMenuList },
+  { path: '/menu/:action', component: TheMenuForm },
+  { path: '/menu/:action/:id', component: TheMenuForm },
+  { path: '/dishes/mainDish', component: TheMainDishList },
+  { path: '/dishes/mainDish/:action', component: TheMainDishForm },
+  { path: '/dishes/mainDish/:action/:id', component: TheMainDishForm },
+  { path: '/dishes/sideDish', component: TheSideDishList },
+  { path: '/dishes/sideDish/:action', component: TheSideDishForm },
+  { path: '/dishes/sideDish/:action/:id', component: TheSideDishForm },
+  { path: '/dishes/salad', component: TheSaladList },
+  { path: '/dishes/salad/:action', component: TheSaladForm },
+  { path: '/dishes/salad/:action/:id', component: TheSaladForm },
   { path: '*', redirect: '/login' },
 ];
 
