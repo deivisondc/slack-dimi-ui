@@ -4,9 +4,10 @@
     :sub-title="'Listagem de todos os acompanhamentos cadastrados'"
     :data-table="dataTable"
     :columns="columns"
-    :form-routes="formRoutes"
     :showButtonsCell="true"
-    :deleteFunction="deleteSideDish"
+    @newRegister="newSideDish"
+    @editRegister="editSideDish"
+    @deleteRegister="deleteSideDish"
   />
 </template>
 
@@ -21,10 +22,6 @@ export default {
   },
   data() {
     return {
-      formRoutes: {
-        new: '/dishes/sideDish/new',
-        edit: '/dishes/sideDish/edit',
-      },
       dataTable: [],
       columns: [
         {
@@ -45,8 +42,14 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    deleteSideDish(id) {
-      sideDishService.delete(id)
+    newSideDish() {
+      this.$router.push({ name: 'SideDishNew', params: { action: 'new' } });
+    },
+    editSideDish(sideDish) {
+      this.$router.push({ name: 'SideDishEdit', params: { action: 'edit', id: sideDish._id } });
+    },
+    deleteSideDish(sideDish) {
+      sideDishService.delete(sideDish._id)
         .then(() => {
           this.getAllSideDishes();
         })

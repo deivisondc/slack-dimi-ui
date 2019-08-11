@@ -12,20 +12,80 @@ import TheSaladList from '@/components/dishes/salad/TheSaladList';
 import TheSaladForm from '@/components/dishes/salad/TheSaladForm';
 
 const routes = [
-  { path: '/login', component: TheLogin },
-  { path: '/menu', component: TheMenuList },
-  { path: '/menu/:action', component: TheMenuForm },
-  { path: '/menu/:action/:id', component: TheMenuForm },
-  { path: '/dishes/mainDish', component: TheMainDishList },
-  { path: '/dishes/mainDish/:action', component: TheMainDishForm },
-  { path: '/dishes/mainDish/:action/:id', component: TheMainDishForm },
-  { path: '/dishes/sideDish', component: TheSideDishList },
-  { path: '/dishes/sideDish/:action', component: TheSideDishForm },
-  { path: '/dishes/sideDish/:action/:id', component: TheSideDishForm },
-  { path: '/dishes/salad', component: TheSaladList },
-  { path: '/dishes/salad/:action', component: TheSaladForm },
-  { path: '/dishes/salad/:action/:id', component: TheSaladForm },
-  { path: '*', redirect: '/login' },
+  {
+    path: '/login',
+    name: 'Login',
+    component: TheLogin,
+  },
+  {
+    path: '/menu',
+    name: 'MenuList',
+    component: TheMenuList,
+  },
+  {
+    path: '/menu/:action',
+    name: 'MenuNew',
+    component: TheMenuForm,
+  },
+  {
+    path: '/menu/:action/:id',
+    name: 'MenuEdit',
+    component: TheMenuForm,
+  },
+  {
+    path: '/menu/:action/:id',
+    name: 'MenuCopy',
+    component: TheMenuForm,
+  },
+  {
+    path: '/dishes/mainDish',
+    name: 'MainDishList',
+    component: TheMainDishList,
+  },
+  {
+    path: '/dishes/mainDish/:action',
+    name: 'MainDishNew',
+    component: TheMainDishForm,
+  },
+  {
+    path: '/dishes/mainDish/:action/:id',
+    name: 'MainDishEdit',
+    component: TheMainDishForm,
+  },
+  {
+    path: '/dishes/sideDish',
+    name: 'SideDishList',
+    component: TheSideDishList,
+  },
+  {
+    path: '/dishes/sideDish/:action',
+    name: 'SideDishNew',
+    component: TheSideDishForm,
+  },
+  {
+    path: '/dishes/sideDish/:action/:id',
+    name: 'SideDishEdit',
+    component: TheSideDishForm,
+  },
+  {
+    path: '/dishes/salad',
+    name: 'SaladList',
+    component: TheSaladList,
+  },
+  {
+    path: '/dishes/salad/:action',
+    name: 'SaladNew',
+    component: TheSaladForm,
+  },
+  {
+    path: '/dishes/salad/:action/:id',
+    name: 'SaladEdit',
+    component: TheSaladForm,
+  },
+  {
+    path: '*',
+    redirect: '/login',
+  },
 ];
 
 export default routes;

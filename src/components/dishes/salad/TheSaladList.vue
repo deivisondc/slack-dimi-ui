@@ -4,9 +4,10 @@
     :sub-title="'Listagem de todas as saladas cadastradas'"
     :data-table="dataTable"
     :columns="columns"
-    :form-routes="formRoutes"
     :showButtonsCell="true"
-    :deleteFunction="deleteSalad"
+    @newRegister="newSalad"
+    @editRegister="editSalad"
+    @deleteRegister="deleteSalad"
   />
 </template>
 
@@ -21,10 +22,6 @@ export default {
   },
   data() {
     return {
-      formRoutes: {
-        new: '/dishes/salad/new',
-        edit: '/dishes/salad/edit',
-      },
       dataTable: [],
       columns: [
         {
@@ -44,8 +41,14 @@ export default {
           this.dataTable = res.data.result;
         });
     },
-    deleteSalad(id) {
-      saladService.delete(id)
+    newSalad() {
+      this.$router.push({ name: 'SaladNew', params: { action: 'new' } });
+    },
+    editSalad(salad) {
+      this.$router.push({ name: 'SaladEdit', params: { action: 'edit', id: salad._id } });
+    },
+    deleteSalad(salad) {
+      saladService.delete(salad._id)
         .then(() => {
           this.getAllSalads();
         })

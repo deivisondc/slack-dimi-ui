@@ -23,13 +23,13 @@
               class="btn-edit"
               circle
               size="small"
-              @click.stop="doEditData(scope.row)"/>
+              @click.stop="emitEvent('editRegister', scope.row)"/>
             <el-button
               icon="el-icon-copy-document"
               class="btn-copy"
               circle
               size="small"
-              @click.stop="doCopyData(scope.row)"
+              @click.stop="emitEvent('copyRegister', scope.row)"
               v-if="showCopyButton"/>
             <el-button
               icon="el-icon-delete"
@@ -48,7 +48,7 @@
           <span>Tem certeza que deseja excluir este registro?</span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">Não</el-button>
-            <el-button type="primary" @click="doDeleteData(scope.row)">Sim</el-button>
+            <el-button type="primary" @click="closeDialogAndEmit('deleteRegister', scope.row)">Sim</el-button>
           </span>
           </el-dialog>
         </template>
@@ -85,14 +85,6 @@ export default {
       required: false,
       default: false,
     },
-    deleteFunction: {
-      type: Function,
-      required: false,
-    },
-    formRoutes: {
-      type: Object,
-      required: false,
-    },
   },
   data() {
     return {
@@ -100,24 +92,12 @@ export default {
     };
   },
   methods: {
-    doEditData(data) {
-      if (data._id && this.formRoutes.edit) {
-        this.goTo(`${this.formRoutes.edit}/${data._id}`);
-      }
+    emitEvent(eventName, data) {
+      this.$emit(eventName, data);
     },
-    doCopyData(data) {
-      if (data._id && this.formRoutes.copy) {
-        this.goTo(`${this.formRoutes.copy}/${data._id}`);
-      }
-    },
-    doDeleteData(data) {
-      if (data._id && this.deleteFunction) {
-        this.deleteFunction(data._id);
-      }
+    closeDialogAndEmit(eventName, data) {
       this.dialogVisible = false;
-    },
-    goTo(route) {
-      this.$router.push(route);
+      this.emitEvent(eventName, data);
     },
   },
 };

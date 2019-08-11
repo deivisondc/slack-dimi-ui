@@ -2,8 +2,8 @@
   <base-form-layout
     :form-model="form"
     :form-rules="formRules"
-    :on-submit="save"
-    :list-url="listUrl"
+    @submitForm="saveForm"
+    @cancelForm="cancelForm"
   >
     <template slot="title">
       Acompanhamento
@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      listUrl: '/dishes/sideDish',
       form: {
         _id: null,
         description: '',
@@ -40,23 +39,23 @@ export default {
     };
   },
   methods: {
-    findById(id) {
-      this.id = id;
-    },
-    save() {
+    saveForm() {
       if (this.$route.params.action === 'edit') {
         sideDishService.update(this.form._id, this.form)
           .then(() => {
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'SideDishList' });
           })
           .catch(err => console.log(err));
       } else {
         sideDishService.create(this.form)
           .then(() => {
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'SideDishList' });
           })
           .catch(err => console.log(err));
       }
+    },
+    cancelForm() {
+      this.$router.push({ name: 'SideDishList' });
     },
   },
   created() {

@@ -43,29 +43,17 @@ export default {
       required: false,
       default: null,
     },
-    onSubmit: {
-      type: Function,
-      required: true,
-    },
-    listUrl: {
-      type: String,
-      required: true,
-    },
   },
   methods: {
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.onSubmit();
+          this.$emit('submitForm');
         }
       });
     },
     cancelForm() {
-      if (this.listUrl) {
-        this.$router.push(this.listUrl);
-      } else {
-        this.$router.go(-1);
-      }
+      this.$emit('cancelForm');
     },
   },
 };

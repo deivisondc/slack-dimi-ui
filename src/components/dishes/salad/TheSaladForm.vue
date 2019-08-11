@@ -2,8 +2,8 @@
   <base-form-layout
     :form-model="form"
     :form-rules="formRules"
-    :on-submit="save"
-    :list-url="listUrl"
+    @submitForm="saveForm"
+    @cancelForm="cancelForm"
   >
     <template slot="title">
       Saladas
@@ -28,7 +28,6 @@ export default {
   },
   data() {
     return {
-      listUrl: '/dishes/salad',
       form: {
         _id: null,
         description: '',
@@ -49,21 +48,23 @@ export default {
     }
   },
   methods: {
-    async save() {
+    async saveForm() {
       if (this.$route.params.action === 'edit') {
         saladService.update(this.form._id, this.form)
           .then(() => {
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'SaladList' });
           })
           .catch(err => console.log(err));
       } else {
         saladService.create(this.form)
           .then((res) => {
-            console.log(res);
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'SaladList' });
           })
           .catch(err => console.log(err));
       }
+    },
+    cancelForm() {
+      this.$router.push({ name: 'SaladList' });
     },
   },
 };

@@ -4,12 +4,14 @@
     :sub-title="'Listagem do cardápio por dias da semana'"
     :data-table="filterMenuByWeekday"
     :columns="columns"
-    :form-routes="formRoutes"
     :showFilter="true"
     :filterFunction="applyFilter"
     :showButtonsCell="true"
     :showCopyButton="true"
-    :deleteFunction="deleteMenu">
+    @newRegister="newMenu"
+    @editRegister="editMenu"
+    @copyRegister="copyMenu"
+    @deleteRegister="deleteMenu">
 
     <template slot="secondaryFilter">
       <el-row>
@@ -77,13 +79,6 @@ export default {
     };
   },
   computed: {
-    formRoutes() {
-      return {
-        new: `/menu/new?weekday=${this.selectedWeekdayFilter}`,
-        edit: '/menu/edit',
-        copy: '/menu/copy',
-      };
-    },
     filterMenuByWeekday() {
       const copyDataTable = this.filteredDataTable || this.dataTable;
       return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekdayFilter, 10));
@@ -156,8 +151,17 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    deleteMenu(id) {
-      menuService.delete(id)
+    newMenu() {
+      this.$router.push({ name: 'MenuNew', params: { action: 'new' }, query: { weekday: this.selectedWeekdayFilter } });
+    },
+    editMenu(menu) {
+      this.$router.push({ name: 'MenuEdit', params: { action: 'edit', id: menu._id } });
+    },
+    copyMenu(menu) {
+      this.$router.push({ name: 'MenuCopy', params: { action: 'copy', id: menu._id } });
+    },
+    deleteMenu(menu) {
+      menuService.delete(menu._id)
         .then(() => {
           this.getAllMenus();
         })

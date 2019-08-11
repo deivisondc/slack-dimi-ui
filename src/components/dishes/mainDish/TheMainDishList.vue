@@ -4,9 +4,10 @@
     :sub-title="'Listagem de todos os pratos principais cadastrados'"
     :data-table="dataTable"
     :columns="columns"
-    :form-routes="formRoutes"
     :showButtonsCell="true"
-    :deleteFunction="deleteMainDish"
+    @newRegister="newMainDish"
+    @editRegister="editMainDish"
+    @deleteRegister="deleteMainDish"
   />
 </template>
 
@@ -21,10 +22,6 @@ export default {
   },
   data() {
     return {
-      formRoutes: {
-        new: '/dishes/mainDish/new',
-        edit: '/dishes/mainDish/edit',
-      },
       dataTable: [],
       columns: [
         {
@@ -45,8 +42,14 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    deleteMainDish(id) {
-      mainDishService.delete(id)
+    newMainDish() {
+      this.$router.push({ name: 'MainDishNew', params: {action: 'new' } });
+    },
+    editMainDish(mainDish) {
+      this.$router.push({ name: 'MainDishEdit', params: { action: 'edit', id: mainDish._id } });
+    },
+    deleteMainDish(mainDish) {
+      mainDishService.delete(mainDish._id)
         .then(() => {
           this.getAllMainDishes();
         })

@@ -2,8 +2,8 @@
   <base-form-layout
     :form-model="form"
     :form-rules="formRules"
-    :on-submit="save"
-    :list-url="listUrl"
+    @submitForm="saveForm"
+    @cancelForm="cancelForm"
   >
     <template slot="title">
       Prato Principal
@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      listUrl: '/dishes/mainDish',
       form: {
         _id: null,
         description: '',
@@ -40,20 +39,23 @@ export default {
     };
   },
   methods: {
-    save() {
+    saveForm() {
       if (this.$route.params.action === 'edit') {
         mainDishService.update(this.form._id, this.form)
           .then(() => {
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'MainDishList' });
           })
           .catch(err => console.log(err));
       } else {
         mainDishService.create(this.form)
           .then(() => {
-            this.$router.push(this.listUrl);
+            this.$router.push({ name: 'MainDishList' });
           })
           .catch(err => console.log(err));
       }
+    },
+    cancelForm() {
+      this.$router.push({ name: 'MainDishList' });
     },
   },
   created() {

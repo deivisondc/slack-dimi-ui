@@ -10,10 +10,9 @@
 
     <br>
     <el-button
-      v-if="formRoutes.new"
       type="success"
       round
-      @click="goTo(formRoutes.new)"
+      @click="$emit('newRegister')"
     >
       Cadastrar
     </el-button>
@@ -33,8 +32,9 @@
       :columns="columns"
       :showButtonsCell="showButtonsCell"
       :showCopyButton="showCopyButton"
-      :deleteFunction="deleteFunction"
-      :formRoutes="formRoutes"
+      @editRegister="$emit('editRegister', $event)"
+      @copyRegister="$emit('copyRegister', $event)"
+      @deleteRegister="$emit('deleteRegister', $event)"
     />
   </el-card>
 </template>
@@ -63,18 +63,10 @@ export default {
       type: Array,
       required: true,
     },
-    formRoutes: {
-      type: Object,
-      required: false,
-    },
     showButtonsCell: {
       type: Boolean,
       required: false,
       default: false,
-    },
-    deleteFunction: {
-      type: Function,
-      required: false,
     },
     showCopyButton: {
       type: Boolean,
@@ -101,9 +93,6 @@ export default {
       if (this.filterFunction) {
         this.filterFunction(this.filterValue);
       }
-    },
-    goTo(route) {
-      this.$router.push(route);
     },
   },
 };

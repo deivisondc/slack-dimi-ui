@@ -3,8 +3,8 @@
     <base-form-layout
       :form-model="form"
       :form-rules="formRules"
-      :on-submit="save"
-      :list-url="listUrl"
+      @submitForm="saveForm"
+      @cancelForm="cancelForm"
     >
       <template slot="title">
         Cardápio
@@ -96,7 +96,6 @@ export default {
   },
   data() {
     return {
-      listUrl: '/menu',
       form: {
         _id: null,
         weekday: [],
@@ -137,7 +136,7 @@ export default {
       });
 
     if (this.$route.query.weekday) {
-      this.form.weekday.push(this.$route.query.weekday);
+      this.form.weekday.push(this.$route.query.weekday.toString());
     }
 
     if (this.$route.params.id) {
@@ -179,20 +178,23 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    save() {
+    saveForm() {
       if (this.isEditing) {
         menuService.update(this.form._id, this.form)
           .then(() => {
-            this.$router.push(`${this.listUrl}?weekday=${this.form.weekday}`);
+            this.$router.push({ name: 'MenuList', query: { weekday: this.form.weekday } });
           })
           .catch(err => console.log(err));
       } else {
         menuService.create(this.form)
           .then(() => {
-            this.$router.push(`${this.listUrl}?weekday=${this.form.weekday}`);
+            this.$router.push({ name: 'MenuList', query: { weekday: this.form.weekday } });
           })
           .catch(err => console.log(err));
       }
+    },
+    cancelForm() {
+      this.$router.push({ name: 'MenuList' });
     },
   },
 };
