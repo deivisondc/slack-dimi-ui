@@ -43,7 +43,7 @@ export default {
         .catch(err => console.log(err));
     },
     newMainDish() {
-      this.$router.push({ name: 'MainDishNew', params: {action: 'new' } });
+      this.$router.push({ name: 'MainDishNew', params: { action: 'new' } });
     },
     editMainDish(mainDish) {
       this.$router.push({ name: 'MainDishEdit', params: { action: 'edit', id: mainDish._id } });

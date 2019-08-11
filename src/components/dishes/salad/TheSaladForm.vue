@@ -57,7 +57,7 @@ export default {
           .catch(err => console.log(err));
       } else {
         saladService.create(this.form)
-          .then((res) => {
+          .then(() => {
             this.$router.push({ name: 'SaladList' });
           })
           .catch(err => console.log(err));

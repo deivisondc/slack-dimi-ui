@@ -78,10 +78,6 @@ export default {
       required: false,
       default: false,
     },
-    filterFunction: {
-      type: Function,
-      required: false,
-    },
   },
   data() {
     return {
@@ -90,9 +86,7 @@ export default {
   },
   methods: {
     filter() {
-      if (this.filterFunction) {
-        this.filterFunction(this.filterValue);
-      }
+      this.$emit('filter', this.filterValue);
     },
   },
 };

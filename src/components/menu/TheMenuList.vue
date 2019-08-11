@@ -5,40 +5,27 @@
     :data-table="filterMenuByWeekday"
     :columns="columns"
     :showFilter="true"
-    :filterFunction="applyFilter"
     :showButtonsCell="true"
     :showCopyButton="true"
     @newRegister="newMenu"
     @editRegister="editMenu"
     @copyRegister="copyMenu"
-    @deleteRegister="deleteMenu">
+    @deleteRegister="deleteMenu"
+    @filter="applyFilter">
 
     <template slot="secondaryFilter">
       <el-row>
         <el-radio-group v-model="selectedWeekdayFilter">
-          <el-badge :value="filterResults[1]" class="item" type="primary" :hidden="!filterResults[1] > 0">
-            <el-radio-button size="small" label="1">
-              Segunda-feira
-            </el-radio-button>
-          </el-badge>
-          <el-badge :value="filterResults[2]" class="item" type="primary" :hidden="!filterResults[2] > 0">
-            <el-radio-button size="small" label="2">
-              Terça-feira
-            </el-radio-button>
-          </el-badge>
-          <el-badge :value="filterResults[3]" class="item" type="primary" :hidden="!filterResults[3] > 0">
-            <el-radio-button size="small" label="3">
-              Quarta-feira
-            </el-radio-button>
-          </el-badge>
-          <el-badge :value="filterResults[4]" class="item" type="primary" :hidden="!filterResults[4] > 0">
-            <el-radio-button size="small" label="4">
-              Quinta-feira
-            </el-radio-button>
-          </el-badge>
-          <el-badge :value="filterResults[5]" class="item" type="primary" :hidden="!filterResults[5] > 0">
-            <el-radio-button size="small" label="5">
-              Sexta-feira
+          <el-badge
+            v-for="(weekday, index) in filterOptions"
+            :key="index"
+            :value="filterResults[index]"
+            class="item"
+            type="primary"
+            :hidden="!filterResults[index] > 0"
+          >
+            <el-radio-button size="small" :label="index">
+              {{ weekday }}
             </el-radio-button>
           </el-badge>
         </el-radio-group>
@@ -74,6 +61,13 @@ export default {
       sideDishList: [],
       saladList: [],
       selectedWeekdayFilter: 1,
+      filterOptions: {
+        1: 'Segunda-feira',
+        2: 'Terça-feira',
+        3: 'Quarta-feira',
+        4: 'Quinta-feira',
+        5: 'Sexta-feira',
+      },
       filterResults: null,
       filteredDataTable: null,
     };
@@ -98,34 +92,17 @@ export default {
   methods: {
     async getAllMenus() {
       await this.getAllMainDishes();
-      await this.getAllSideDishes();
-      await this.getAllSalads();
       menuService.all()
         .then((res) => {
           this.dataTable = res.data.result;
 
           this.dataTable.forEach((el) => {
-            el.mainDishDescription = lodash.find(this.mainDishList, (o => o._id === el.main_dish_id)).description;
+            const mainDishDescription = lodash.find(this.mainDishList, (o => o._id === el.main_dish_id)).description;
+            const sideDishesCounter = el.side_dishes.length;
+            const saladsCounter = el.salads.length;
 
-            el.fullDescription = `${el.mainDishDescription} com <`;
-
-            let first = true;
-            el.side_dishes.forEach((sideDishId) => {
-              const { description } = lodash.find(this.sideDishList, (o => o._id === sideDishId));
-              el.fullDescription += first ? description : ` OU ${description}`;
-              first = false;
-            });
-
-            el.fullDescription += '> + <';
-
-            first = true;
-            el.salads.forEach((saladId) => {
-              const { description } = lodash.find(this.saladList, (o => o._id === saladId));
-              el.fullDescription += first ? description : ` OU ${description}`;
-              first = false;
-            });
-
-            el.fullDescription += '>';
+            el.fullDescription = `${mainDishDescription} `;
+            el.fullDescription += `com ${sideDishesCounter} acompanhamentos e ${saladsCounter} saladas`;
           });
         })
         .catch(err => console.log(err));
@@ -173,23 +150,15 @@ export default {
         item => item.fullDescription.toLowerCase().includes(filterValue.toLowerCase()),
       );
 
-      this.filterResults[1] = this.filteredDataTable.filter(item => item.weekday === 1).length;
-      this.filterResults[2] = this.filteredDataTable.filter(item => item.weekday === 2).length;
-      this.filterResults[3] = this.filteredDataTable.filter(item => item.weekday === 3).length;
-      this.filterResults[4] = this.filteredDataTable.filter(item => item.weekday === 4).length;
-      this.filterResults[5] = this.filteredDataTable.filter(item => item.weekday === 5).length;
+      for (let i = 1; i <= 5; i += 1) {
+        this.filterResults[i] = this.filteredDataTable.filter(item => item.weekday === i).length;
+      }
 
       return true;
     },
     resetFilterVariables() {
       this.filteredDataTable = null;
-      this.filterResults = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-      };
+      this.filterResults = {};
     },
   },
 };
