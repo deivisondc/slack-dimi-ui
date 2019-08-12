@@ -29,7 +29,6 @@ export default new Vuex.Store({
     login({ commit }, payload) {
       loginService.login(payload)
         .then((res) => {
-          console.log(res);
           commit('authUser', res.data);
 
           const expireDate = new Date(new Date().getTime() + res.data.expiresAt);

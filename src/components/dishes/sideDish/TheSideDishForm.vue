@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     saveForm() {
-      if (this.$route.params.action === 'edit') {
+      if (this.$route.fullPath.includes('edit')) {
         sideDishService.update(this.form._id, this.form)
           .then(() => {
             this.$router.push({ name: 'SideDishList' });

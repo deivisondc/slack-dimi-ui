@@ -23,17 +23,17 @@ const routes = [
     component: TheMenuList,
   },
   {
-    path: '/menu/:action',
+    path: '/menu/new',
     name: 'MenuNew',
     component: TheMenuForm,
   },
   {
-    path: '/menu/:action/:id',
+    path: '/menu/edit/:id',
     name: 'MenuEdit',
     component: TheMenuForm,
   },
   {
-    path: '/menu/:action/:id',
+    path: '/menu/copy/:id',
     name: 'MenuCopy',
     component: TheMenuForm,
   },
@@ -43,12 +43,12 @@ const routes = [
     component: TheMainDishList,
   },
   {
-    path: '/dishes/mainDish/:action',
+    path: '/dishes/mainDish/new',
     name: 'MainDishNew',
     component: TheMainDishForm,
   },
   {
-    path: '/dishes/mainDish/:action/:id',
+    path: '/dishes/mainDish/edit/:id',
     name: 'MainDishEdit',
     component: TheMainDishForm,
   },
@@ -58,12 +58,12 @@ const routes = [
     component: TheSideDishList,
   },
   {
-    path: '/dishes/sideDish/:action',
+    path: '/dishes/sideDish/new',
     name: 'SideDishNew',
     component: TheSideDishForm,
   },
   {
-    path: '/dishes/sideDish/:action/:id',
+    path: '/dishes/sideDish/edit/:id',
     name: 'SideDishEdit',
     component: TheSideDishForm,
   },
@@ -73,12 +73,12 @@ const routes = [
     component: TheSaladList,
   },
   {
-    path: '/dishes/salad/:action',
+    path: '/dishes/salad/new',
     name: 'SaladNew',
     component: TheSaladForm,
   },
   {
-    path: '/dishes/salad/:action/:id',
+    path: '/dishes/salad/edit/:id',
     name: 'SaladEdit',
     component: TheSaladForm,
   },

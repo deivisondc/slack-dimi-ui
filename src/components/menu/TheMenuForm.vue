@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     isEditing() {
-      return this.$route.params.action === 'edit';
+      return this.$route.fullPath.includes('edit');
     },
   },
   async created() {
@@ -144,7 +144,7 @@ export default {
         .then((res) => {
           const { result } = res.data;
 
-          if (this.$route.params.action === 'copy') {
+          if (this.$route.fullPath.includes('copy')) {
             result._id = null;
             result.weekday = [];
           } else {
