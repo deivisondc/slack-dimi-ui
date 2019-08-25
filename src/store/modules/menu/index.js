@@ -6,12 +6,18 @@ export default {
   namespaced: true,
   state: {
     menuList: [],
+    filteredMenuList: null,
+    filterResults: {},
   },
   getters: {
     menuList: state => state.menuList,
-    menuById(state) {
-      return id => state.menuList.find(menu => menu._id === id);
+    filteredMenuList: state => state.filteredMenuList,
+    filterResults: state => state.filterResults,
+    filterMenuByWeekday: state => selectedWeekday => {
+      const copyDataTable = state.filteredMenuList || state.menuList;
+      return copyDataTable.filter(item => item.weekday === parseInt(selectedWeekday, 10));
     },
+    menuById: state => id => state.menuList.find(menu => menu._id === id),
   },
   actions: {
     async fetchMenuList({ commit, dispatch, rootState }) {
@@ -33,6 +39,18 @@ export default {
           commit('fetchMenuList', menuList);
         })
         .catch(err => console.log(err));
+    },
+    applyFilter({ getters, commit }, filterValue) {
+      if (!filterValue) {
+        commit('resetFilterVariables');
+      } else {
+        const filteredValues = getters.menuList.filter(
+          item => item.fullDescription.toLowerCase().includes(filterValue.toLowerCase()),
+        );
+  
+        commit('updateFilteredMenuList', filteredValues);
+        commit('updateFilteredMenuResults', filteredValues);
+      }
     },
     saveMenu(context, { menu, operation }) {
       if (operation === 'edit') {
@@ -61,5 +79,17 @@ export default {
     fetchMenuList(state, newMenuList) {
       state.menuList = newMenuList;
     },
+    updateFilteredMenuList(state, newFilteredMenuList) {
+      state.filteredMenuList = newFilteredMenuList;
+    },
+    updateFilteredMenuResults(state, newFilteredMenuList) {
+      for (let i = 1; i <= 5; i += 1) {
+        state.filterResults[i] = newFilteredMenuList.filter(item => item.weekday === i).length;
+      }
+    },
+    resetFilterVariables(state) {
+      state.filteredMenuList = null;
+      state.filterResults = {};
+    }
   },
 };

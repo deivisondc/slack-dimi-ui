@@ -2,7 +2,7 @@
   <base-list-layout
     :title="'Cardápio'"
     :sub-title="'Listagem do cardápio por dias da semana'"
-    :data-table="filterMenuByWeekday"
+    :data-table="filterMenuByWeekday(selectedWeekdayFilter)"
     :columns="columns"
     :showFilter="true"
     :showButtonsCell="true"
@@ -59,12 +59,9 @@ export default {
         4: 'Quinta-feira',
         5: 'Sexta-feira',
       },
-      filterResults: null,
-      filteredDataTable: null,
     };
   },
   created() {
-    this.resetFilterVariables();
     if (this.$route.query.weekday) {
       this.selectedWeekdayFilter = this.$route.query.weekday;
     } else {
@@ -75,11 +72,7 @@ export default {
     this.getAllMenus();
   },
   computed: {
-    ...mapGetters('menu', ['menuList']),
-    filterMenuByWeekday() {
-      const copyDataTable = this.filteredDataTable || this.menuList;
-      return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekdayFilter, 10));
-    },
+    ...mapGetters('menu', ['filterMenuByWeekday', 'filterResults']),
   },
   methods: {
     getAllMenus() {
@@ -98,20 +91,7 @@ export default {
       this.$store.dispatch('menu/deleteMenu', menu);
     },
     applyFilter(filterValue) {
-      if (!filterValue) return this.resetFilterVariables();
-      this.filteredDataTable = this.dataTable.filter(
-        item => item.fullDescription.toLowerCase().includes(filterValue.toLowerCase()),
-      );
-
-      for (let i = 1; i <= 5; i += 1) {
-        this.filterResults[i] = this.filteredDataTable.filter(item => item.weekday === i).length;
-      }
-
-      return true;
-    },
-    resetFilterVariables() {
-      this.filteredDataTable = null;
-      this.filterResults = {};
+      this.$store.dispatch('menu/applyFilter', filterValue);
     },
   },
 };

@@ -13,7 +13,7 @@ export default {
     },
   },
   actions: {
-    fetchMainDishList({ commit }) {
+    async fetchMainDishList({ commit }) {
       mainDishService.all()
         .then((res) => {
           commit('fetchMainDishList', res.data.result);
