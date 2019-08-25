@@ -71,12 +71,12 @@ export default {
       return this.$route.fullPath.includes('/login');
     },
     activeMenu() {
-      const fullPath = this.$route.fullPath;
-      let defaulIndex = "1";
+      const { fullPath } = this.$route;
+      let defaulIndex = '1';
 
-      if (fullPath.includes('/mainDish')) defaulIndex = "2";
-      if (fullPath.includes('/sideDish')) defaulIndex = "3";
-      if (fullPath.includes('/salad')) defaulIndex = "4";
+      if (fullPath.includes('/mainDish')) defaulIndex = '2';
+      if (fullPath.includes('/sideDish')) defaulIndex = '3';
+      if (fullPath.includes('/salad')) defaulIndex = '4';
 
       return defaulIndex;
     },
