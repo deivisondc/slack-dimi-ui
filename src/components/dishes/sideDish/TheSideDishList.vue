@@ -2,7 +2,7 @@
   <base-list-layout
     :title="'Acompanhamento'"
     :sub-title="'Listagem de todos os acompanhamentos cadastrados'"
-    :data-table="dataTable"
+    :data-table="sideDishList"
     :columns="columns"
     :showButtonsCell="true"
     @newRegister="newSideDish"
@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import BaseListLayout from '@/components/layout/BaseListLayout';
+import { mapGetters } from 'vuex';
 
-import sideDishService from '@/services/modules/sideDishService';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
 export default {
   components: {
@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      dataTable: [],
       columns: [
         {
           name: 'Descrição',
@@ -34,13 +33,12 @@ export default {
   created() {
     this.getAllSideDishes();
   },
+  computed: {
+    ...mapGetters('sideDish', ['sideDishList']),
+  },
   methods: {
     getAllSideDishes() {
-      sideDishService.all()
-        .then((res) => {
-          this.dataTable = res.data.result;
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('sideDish/fetchSideDishList');
     },
     newSideDish() {
       this.$router.push({ name: 'SideDishNew', params: { action: 'new' } });
@@ -49,11 +47,7 @@ export default {
       this.$router.push({ name: 'SideDishEdit', params: { action: 'edit', id: sideDish._id } });
     },
     deleteSideDish(sideDish) {
-      sideDishService.delete(sideDish._id)
-        .then(() => {
-          this.getAllSideDishes();
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('sideDish/deleteSideDish', sideDish);
     },
   },
 };

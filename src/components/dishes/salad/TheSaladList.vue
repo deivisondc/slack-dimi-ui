@@ -2,7 +2,7 @@
   <base-list-layout
     :title="'Saladas'"
     :sub-title="'Listagem de todas as saladas cadastradas'"
-    :data-table="dataTable"
+    :data-table="saladList"
     :columns="columns"
     :showButtonsCell="true"
     @newRegister="newSalad"
@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import BaseListLayout from '@/components/layout/BaseListLayout';
+import { mapGetters } from 'vuex';
 
-import saladService from '@/services/modules/saladService';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
 export default {
   components: {
@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      dataTable: [],
       columns: [
         {
           name: 'Descrição',
@@ -31,15 +30,15 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters('salad', ['saladList']),
+  },
   created() {
     this.getAllSalads();
   },
   methods: {
     getAllSalads() {
-      saladService.all()
-        .then((res) => {
-          this.dataTable = res.data.result;
-        });
+      this.$store.dispatch('salad/fetchSaladList');
     },
     newSalad() {
       this.$router.push({ name: 'SaladNew', params: { action: 'new' } });
@@ -48,11 +47,7 @@ export default {
       this.$router.push({ name: 'SaladEdit', params: { action: 'edit', id: salad._id } });
     },
     deleteSalad(salad) {
-      saladService.delete(salad._id)
-        .then(() => {
-          this.getAllSalads();
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('salad/deleteSalad', salad);
     },
   },
 };

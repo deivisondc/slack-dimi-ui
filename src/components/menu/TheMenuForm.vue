@@ -26,7 +26,7 @@
             style="width: 100%"
           >
             <el-option
-              v-for="mainDish in mainDishesList"
+              v-for="mainDish in mainDishList"
               :key="mainDish._id"
               :label="mainDish.description"
               :value="mainDish._id"
@@ -41,7 +41,7 @@
             style="width:100%"
           >
             <el-option
-              v-for="sideDish in sideDishesList"
+              v-for="sideDish in sideDishList"
               :key="sideDish._id"
               :label="sideDish.description"
               :value="sideDish._id"
@@ -56,24 +56,12 @@
             style="width:100%"
           >
             <el-option
-              v-for="salad in saladsList"
+              v-for="salad in saladList"
               :key="salad._id"
               :label="salad.description"
               :value="salad._id"
             />
           </el-select>
-          <!-- <el-checkbox-group
-            v-model="form.salads"
-            style="width: 100%; text-align: left"
-          >
-            <el-checkbox
-              v-for="salad in saladsList"
-              :key="salad._id"
-              :label="salad.description"
-              :value="salad._id"
-              checked
-            />
-          </el-checkbox-group> -->
         </el-form-item>
       </template>
     </base-form-layout>
@@ -81,13 +69,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import BaseFormLayout from '@/components/layout/BaseFormLayout';
 import SelectWeekday from '@/components/utils/SelectWeekday.vue';
-
-import menuService from '@/services/modules/menuService';
-import mainDishService from '@/services/modules/mainDishService';
-import sideDishService from '@/services/modules/sideDishService';
-import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
@@ -117,12 +101,13 @@ export default {
           { required: true, type: 'array', message: 'Selecione pelo menos uma salada.' },
         ],
       },
-      mainDishesList: [],
-      sideDishesList: [],
-      saladsList: [],
     };
   },
   computed: {
+    ...mapGetters('salad', ['saladList']),
+    ...mapGetters('sideDish', ['sideDishList']),
+    ...mapGetters('mainDish', ['mainDishList']),
+    ...mapGetters('menu', ['menuById']),
     isEditing() {
       return this.$route.fullPath.includes('edit');
     },
@@ -130,68 +115,37 @@ export default {
   async created() {
     this.getAllMainDishes();
     this.getAllSideDishes();
-    this.getAllSalads()
-      .then(() => {
-        this.form.salads = this.saladsList.map(salad => salad._id);
-      });
+    this.getAllSalads();
 
     if (this.$route.query.weekday) {
       this.form.weekday.push(this.$route.query.weekday.toString());
     }
 
     if (this.$route.params.id) {
-      menuService.find(this.$route.params.id)
-        .then((res) => {
-          const { result } = res.data;
+      const menu = this.menuById(this.$route.params.id);
+      if (this.$route.fullPath.includes('copy')) {
+        menu._id = null;
+        menu.weekday = [];
+      } else {
+        menu.weekday = menu.weekday.toString();
+      }
 
-          if (this.$route.fullPath.includes('copy')) {
-            result._id = null;
-            result.weekday = [];
-          } else {
-            result.weekday = result.weekday.toString();
-          }
-
-          this.form = result;
-        })
-        .catch(err => console.log(err));
+      this.form = menu;
     }
   },
   methods: {
     getAllMainDishes() {
-      mainDishService.all()
-        .then((res) => {
-          this.mainDishesList = res.data.result;
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('mainDish/fetchMainDishList');
     },
     getAllSideDishes() {
-      sideDishService.all()
-        .then((res) => {
-          this.sideDishesList = res.data.result;
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('sideDish/fetchSideDishList');
     },
     async getAllSalads() {
-      return saladService.all()
-        .then((res) => {
-          this.saladsList = res.data.result;
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('salad/fetchSaladList');
     },
     saveForm() {
-      if (this.isEditing) {
-        menuService.update(this.form._id, this.form)
-          .then(() => {
-            this.$router.push({ name: 'MenuList', query: { weekday: this.form.weekday } });
-          })
-          .catch(err => console.log(err));
-      } else {
-        menuService.create(this.form)
-          .then(() => {
-            this.$router.push({ name: 'MenuList', query: { weekday: this.form.weekday } });
-          })
-          .catch(err => console.log(err));
-      }
+      const operation = this.isEditing ? 'edit' : 'create';
+      this.$store.dispatch('menu/saveMenu', { menu: this.form, operation });
     },
     cancelForm() {
       this.$router.push({ name: 'MenuList' });

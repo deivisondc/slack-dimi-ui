@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import BaseFormLayout from '@/components/layout/BaseFormLayout';
+import { mapGetters } from 'vuex';
 
-import saladService from '@/services/modules/saladService';
+import BaseFormLayout from '@/components/layout/BaseFormLayout';
 
 export default {
   components: {
@@ -41,27 +41,16 @@ export default {
   },
   created() {
     if (this.$route.params.id) {
-      saladService.find(this.$route.params.id)
-        .then((res) => {
-          this.form = res.data.result;
-        });
+      this.form = this.saladById(this.$route.params.id);
     }
+  },
+  computed: {
+    ...mapGetters('salad', ['saladById']),
   },
   methods: {
     async saveForm() {
-      if (this.$route.fullPath.includes('edit')) {
-        saladService.update(this.form._id, this.form)
-          .then(() => {
-            this.$router.push({ name: 'SaladList' });
-          })
-          .catch(err => console.log(err));
-      } else {
-        saladService.create(this.form)
-          .then(() => {
-            this.$router.push({ name: 'SaladList' });
-          })
-          .catch(err => console.log(err));
-      }
+      const operation = this.$route.fullPath.includes('edit') ? 'edit' : 'create';
+      this.$store.dispatch('salad/saveSalad', { salad: this.form, operation });
     },
     cancelForm() {
       this.$router.push({ name: 'SaladList' });

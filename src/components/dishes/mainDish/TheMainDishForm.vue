@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import BaseFormLayout from '@/components/layout/BaseFormLayout';
+import { mapGetters } from 'vuex';
 
-import mainDishService from '@/services/modules/mainDishService';
+import BaseFormLayout from '@/components/layout/BaseFormLayout';
 
 export default {
   components: {
@@ -38,34 +38,22 @@ export default {
       },
     };
   },
+  created() {
+    if (this.$route.params.id) {
+      this.form = this.mainDishById(this.$route.params.id);
+    }
+  },
+  computed: {
+    ...mapGetters('mainDish', ['mainDishById']),
+  },
   methods: {
     saveForm() {
-      if (this.$route.fullPath.includes('edit')) {
-        mainDishService.update(this.form._id, this.form)
-          .then(() => {
-            this.$router.push({ name: 'MainDishList' });
-          })
-          .catch(err => console.log(err));
-      } else {
-        mainDishService.create(this.form)
-          .then(() => {
-            this.$router.push({ name: 'MainDishList' });
-          })
-          .catch(err => console.log(err));
-      }
+      const operation = this.$route.fullPath.includes('edit') ? 'edit' : 'create';
+      this.$store.dispatch('mainDish/saveMainDish', { mainDish: this.form, operation });
     },
     cancelForm() {
       this.$router.push({ name: 'MainDishList' });
     },
-  },
-  created() {
-    if (this.$route.params.id) {
-      mainDishService.find(this.$route.params.id)
-        .then((res) => {
-          this.form = res.data.result;
-        })
-        .catch(err => console.log(err));
-    }
   },
 };
 </script>

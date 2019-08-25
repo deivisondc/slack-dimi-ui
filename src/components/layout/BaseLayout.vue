@@ -7,7 +7,7 @@
         style="padding-left: 50px"
         background-color="#ffffff"
         active-text-color="#153f8a"
-        default-active=1
+        :default-active="activeMenu"
       >
         <el-menu-item
           index="1"
@@ -16,19 +16,19 @@
           Cardápio
         </el-menu-item>
         <el-menu-item
-          index="2-1"
+          index="2"
           @click="goTo('/dishes/mainDish')"
         >
           Prato Principal
         </el-menu-item>
         <el-menu-item
-          index="2-2"
+          index="3"
           @click="goTo('/dishes/sideDish')"
         >
           Acompanhamentos
         </el-menu-item>
         <el-menu-item
-          index="2-3"
+          index="4"
           @click="goTo('/dishes/salad')"
         >
           Saladas
@@ -69,6 +69,16 @@ export default {
   computed: {
     isLoginRoute() {
       return this.$route.fullPath.includes('/login');
+    },
+    activeMenu() {
+      const fullPath = this.$route.fullPath;
+      let defaulIndex = "1";
+
+      if (fullPath.includes('/mainDish')) defaulIndex = "2";
+      if (fullPath.includes('/sideDish')) defaulIndex = "3";
+      if (fullPath.includes('/salad')) defaulIndex = "4";
+
+      return defaulIndex;
     },
   },
 };

@@ -35,14 +35,9 @@
 </template>
 
 <script>
-import lodash from 'lodash';
+import { mapGetters } from 'vuex';
 
 import BaseListLayout from '@/components/layout/BaseListLayout';
-
-import menuService from '@/services/modules/menuService';
-import mainDishService from '@/services/modules/mainDishService';
-import sideDishService from '@/services/modules/sideDishService';
-import saladService from '@/services/modules/saladService';
 
 export default {
   components: {
@@ -50,16 +45,12 @@ export default {
   },
   data() {
     return {
-      dataTable: [],
       columns: [
         {
           name: 'Prato',
           value: 'fullDescription',
         },
       ],
-      mainDishList: [],
-      sideDishList: [],
-      saladList: [],
       selectedWeekdayFilter: 1,
       filterOptions: {
         1: 'Segunda-feira',
@@ -72,12 +63,6 @@ export default {
       filteredDataTable: null,
     };
   },
-  computed: {
-    filterMenuByWeekday() {
-      const copyDataTable = this.filteredDataTable || this.dataTable;
-      return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekdayFilter, 10));
-    },
-  },
   created() {
     this.resetFilterVariables();
     if (this.$route.query.weekday) {
@@ -89,44 +74,16 @@ export default {
 
     this.getAllMenus();
   },
+  computed: {
+    ...mapGetters('menu', ['menuList']),
+    filterMenuByWeekday() {
+      const copyDataTable = this.filteredDataTable || this.menuList;
+      return copyDataTable.filter(item => item.weekday === parseInt(this.selectedWeekdayFilter, 10));
+    },
+  },
   methods: {
-    async getAllMenus() {
-      await this.getAllMainDishes();
-      menuService.all()
-        .then((res) => {
-          this.dataTable = res.data.result;
-
-          this.dataTable.forEach((el) => {
-            const mainDishDescription = lodash.find(this.mainDishList, (o => o._id === el.main_dish_id)).description;
-            const sideDishesCounter = el.side_dishes.length;
-            const saladsCounter = el.salads.length;
-
-            el.fullDescription = `${mainDishDescription} `;
-            el.fullDescription += `com ${sideDishesCounter} acompanhamentos e ${saladsCounter} saladas`;
-          });
-        })
-        .catch(err => console.log(err));
-    },
-    getAllMainDishes() {
-      return mainDishService.all()
-        .then((res) => {
-          this.mainDishList = res.data.result;
-        })
-        .catch(err => console.log(err));
-    },
-    getAllSideDishes() {
-      return sideDishService.all()
-        .then((res) => {
-          this.sideDishList = res.data.result;
-        })
-        .catch(err => console.log(err));
-    },
-    getAllSalads() {
-      return saladService.all()
-        .then((res) => {
-          this.saladList = res.data.result;
-        })
-        .catch(err => console.log(err));
+    getAllMenus() {
+      this.$store.dispatch('menu/fetchMenuList');
     },
     newMenu() {
       this.$router.push({ name: 'MenuNew', params: { action: 'new' }, query: { weekday: this.selectedWeekdayFilter } });
@@ -138,11 +95,7 @@ export default {
       this.$router.push({ name: 'MenuCopy', params: { action: 'copy', id: menu._id } });
     },
     deleteMenu(menu) {
-      menuService.delete(menu._id)
-        .then(() => {
-          this.getAllMenus();
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('menu/deleteMenu', menu);
     },
     applyFilter(filterValue) {
       if (!filterValue) return this.resetFilterVariables();

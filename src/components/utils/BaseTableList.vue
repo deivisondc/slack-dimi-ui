@@ -36,7 +36,7 @@
               class="btn-delete"
               circle
               size="small"
-              @click.stop="dialogVisible = true"/>
+              @click.stop="openDialog(scope.row)"/>
           </div>
 
           <el-dialog
@@ -45,11 +45,11 @@
             :close-on-click-modal="false"
             width="30%"
           >
-          <span>Tem certeza que deseja excluir este registro?</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">Não</el-button>
-            <el-button type="primary" @click="closeDialogAndEmit('deleteRegister', scope.row)">Sim</el-button>
-          </span>
+            <span>Tem certeza que deseja excluir este registro?</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">Não</el-button>
+              <el-button type="primary" @click="closeDialogAndEmit('deleteRegister')">Sim</el-button>
+            </span>
           </el-dialog>
         </template>
       </el-table-column>
@@ -89,15 +89,20 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      dataSelectedToDelete: null,
     };
   },
   methods: {
     emitEvent(eventName, data) {
       this.$emit(eventName, data);
     },
-    closeDialogAndEmit(eventName, data) {
+    openDialog(data) {
+      this.dialogVisible = true;
+      this.dataSelectedToDelete = data;
+    },
+    closeDialogAndEmit(eventName) {
       this.dialogVisible = false;
-      this.emitEvent(eventName, data);
+      this.emitEvent(eventName, this.dataSelectedToDelete);
     },
   },
 };

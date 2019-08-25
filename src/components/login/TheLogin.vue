@@ -10,7 +10,7 @@
       </el-card>
       <el-main>
         <div class="main-content">
-          <el-input class="login-input" v-model="login" placeholder="Email"/>
+          <el-input class="login-input" v-model="email" placeholder="Email"/>
           <br>
           <el-input
             type="password"
@@ -37,13 +37,13 @@
 export default {
   data() {
     return {
-      login: '',
+      email: '',
       password: '',
     };
   },
   methods: {
     logon() {
-      this.$store.dispatch('login', { login: this.login, password: this.password });
+      this.$store.dispatch('login', { email: this.email, password: this.password });
       this.$router.push('/menu');
     },
   },

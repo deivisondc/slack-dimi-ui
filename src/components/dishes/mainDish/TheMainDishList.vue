@@ -2,7 +2,7 @@
   <base-list-layout
     :title="'Prato Principal'"
     :sub-title="'Listagem de todos os pratos principais cadastrados'"
-    :data-table="dataTable"
+    :data-table="mainDishList"
     :columns="columns"
     :showButtonsCell="true"
     @newRegister="newMainDish"
@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import BaseListLayout from '@/components/layout/BaseListLayout';
+import { mapGetters } from 'vuex';
 
-import mainDishService from '@/services/modules/mainDishService';
+import BaseListLayout from '@/components/layout/BaseListLayout';
 
 export default {
   components: {
@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      dataTable: [],
       columns: [
         {
           name: 'Descrição',
@@ -34,13 +33,12 @@ export default {
   created() {
     this.getAllMainDishes();
   },
+  computed: {
+    ...mapGetters('mainDish', ['mainDishList']),
+  },
   methods: {
     getAllMainDishes() {
-      mainDishService.all()
-        .then((res) => {
-          this.dataTable = res.data.result;
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('mainDish/fetchMainDishList');
     },
     newMainDish() {
       this.$router.push({ name: 'MainDishNew', params: { action: 'new' } });
@@ -49,11 +47,7 @@ export default {
       this.$router.push({ name: 'MainDishEdit', params: { action: 'edit', id: mainDish._id } });
     },
     deleteMainDish(mainDish) {
-      mainDishService.delete(mainDish._id)
-        .then(() => {
-          this.getAllMainDishes();
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('mainDish/deleteMainDish', mainDish);
     },
   },
 };
