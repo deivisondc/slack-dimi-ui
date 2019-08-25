@@ -13,7 +13,7 @@ export default {
     menuList: state => state.menuList,
     filteredMenuList: state => state.filteredMenuList,
     filterResults: state => state.filterResults,
-    filterMenuByWeekday: state => selectedWeekday => {
+    filterMenuByWeekday: state => (selectedWeekday) => {
       const copyDataTable = state.filteredMenuList || state.menuList;
       return copyDataTable.filter(item => item.weekday === parseInt(selectedWeekday, 10));
     },
@@ -47,7 +47,7 @@ export default {
         const filteredValues = getters.menuList.filter(
           item => item.fullDescription.toLowerCase().includes(filterValue.toLowerCase()),
         );
-  
+
         commit('updateFilteredMenuList', filteredValues);
         commit('updateFilteredMenuResults', filteredValues);
       }
@@ -90,6 +90,6 @@ export default {
     resetFilterVariables(state) {
       state.filteredMenuList = null;
       state.filterResults = {};
-    }
+    },
   },
 };
